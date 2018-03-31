@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/indicators_layout"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+       android:padding="5dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/child_leimu"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:text="区级一般公共预算收入"
+            android:gravity="center"
+            android:textSize="14sp"
+           />
+        <TextView
+            android:id="@+id/child_leiji"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="232.80"
+            android:gravity="center"
+            android:textSize="14sp"
+            />
+        <TextView
+            android:id="@+id/child_zengzhang"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="-31.6"
+            android:gravity="center"
+            android:textSize="14sp"
+            />
+        <Button
+            android:id="@+id/child_pingjia"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:background="@color/colorPrimary"
+            android:layout_height="wrap_content"
+            android:text="完成全年指标任务"
+            android:textColor="@color/white2"
+            android:gravity="center"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/child_pingjia_title"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+
+            android:layout_height="wrap_content"
+            android:text="进度评价"
+
+            android:gravity="center"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

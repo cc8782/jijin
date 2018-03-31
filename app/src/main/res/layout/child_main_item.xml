@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/main_item"
+    android:background="#ffffff"
+    android:orientation="horizontal"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/child_zuhe_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="测试组合001"
+            android:gravity="center"
+            android:textSize="18sp"
+           />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/child_zuhe_jz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1.5325"
+            android:gravity="center"
+            android:textSize="18sp"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/child_zuhe_zdhc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-15%"
+            android:gravity="center"
+            android:textSize="18sp"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

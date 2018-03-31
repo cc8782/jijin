@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/grey"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/renkou_head"
+            android:layout_marginTop="8dp"
+            android:background="#fff">
+
+            <RelativeLayout
+                android:id="@+id/biaoti1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="人口综合数据"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/center"
+                   android:gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="8dp"
+                    android:text="常住人口106.78万人，户籍人口94.20万人"
+
+                    android:textSize="8dp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/line"
+
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/biaoti1"
+                android:background="@color/grey" />
+
+
+
+            <com.example.app.view.LinearLayoutForListView
+                android:id="@+id/renkou_list"
+                android:layout_below="@id/line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </com.example.app.view.LinearLayoutForListView>
+
+        </RelativeLayout>
+    <WebView
+        android:layout_below="@+id/renkou_head"
+        android:background="@color/white2"
+        android:id="@+id/web_population"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"></WebView>
+        <com.example.app.view.LinearLayoutForListView
+            android:id="@+id/shehui_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.example.app.view.LinearLayoutForListView>
+
+    </RelativeLayout>
+</ScrollView>

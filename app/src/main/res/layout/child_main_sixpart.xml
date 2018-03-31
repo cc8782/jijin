@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/child_six_part"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="产业经济"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"/>
+        <TextView
+            android:id="@+id/child_six_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1-12月五大产业税收合计"
+            android:gravity="center"
+            android:textSize="12sp"
+            />
+        <TextView
+            android:id="@+id/child_six_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="483.01亿元"
+            android:gravity="center"
+            android:textSize="14sp"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

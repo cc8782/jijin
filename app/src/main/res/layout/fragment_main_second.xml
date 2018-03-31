@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/second_head"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white2">
+
+            <com.example.app.view.MyGirdView
+                android:id="@+id/main_sixpart_tablelayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey"
+                android:horizontalSpacing="0.5dp"
+                android:numColumns="2"
+                android:verticalSpacing="0.5dp">
+
+            </com.example.app.view.MyGirdView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/second_head"
+            android:layout_marginTop="8dp"
+            android:background="#fff">
+
+            <RelativeLayout
+                android:id="@+id/biaoti1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="主要指标完成情况"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/center"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="8dp"
+                    android:text="单位：亿元"
+
+                    android:textSize="8dp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/line"
+
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/biaoti1"
+                android:background="@color/grey" />
+
+
+
+                <com.example.app.view.LinearLayoutForListView
+                    android:id="@+id/indicators"
+                    android:layout_below="@id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </com.example.app.view.LinearLayoutForListView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
