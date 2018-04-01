@@ -16,7 +16,7 @@ import butterknife.BindView;
  * Created by hello on 2018/3/5.
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BackActivity {
 
     @BindView(R.id.main_listview)
     ListView listView;

@@ -24,7 +24,7 @@ public class Group extends RealmObject {
    private RealmList<ChiCang> chicang;
     private int status;//当前状态，0正在使用，1废弃
     private RealmList<Dayprofit> dayprofits;//每日收益
-
+    private Date update;
     public Group() {
     }
     public Group(String name,double lijz, double zdhc) {
@@ -35,6 +35,14 @@ public class Group extends RealmObject {
 
     public double getLjjz() {
         return ljjz;
+    }
+
+    public Date getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(Date update) {
+        this.update = update;
     }
 
     public void setLjjz(double ljjz) {

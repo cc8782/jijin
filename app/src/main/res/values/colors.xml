@@ -8,6 +8,11 @@
     <color name="black">#000000</color>
     <color name="selected">#d8f3fe</color>
     <color name="blue">#1296db</color>
+    <color name="red">#EC542F</color>
+    <color name="green">#0DAB34</color>
+    <color name="bgblue">#4394FD</color>
+    <color name="bgbluelight">#2BBDF9</color>
+
 
     <color name="black_overlay">#66000000</color>
 </resources>

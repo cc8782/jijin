@@ -69,7 +69,7 @@ public class OkHttp3Utils {
             //  File sdcache = getExternalCacheDir();
             //缓存目录
             File sdcache = new File(Environment.getExternalStorageDirectory(), "cache");
-            int cacheSize = 10 * 1024 * 1024;
+            int cacheSize = 20 * 1024 * 1024;
             //OkHttp3拦截器
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
@@ -81,7 +81,7 @@ public class OkHttp3Utils {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
 
-            okHttpClient = new OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS)
+            okHttpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
                     //添加OkHttp3的拦截器
                     .addInterceptor(httpLoggingInterceptor)
                     .addNetworkInterceptor(new CacheInterceptor())
