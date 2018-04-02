@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.app.R;
+import com.example.app.adapter.SearchJingzhiAdapter;
 import com.example.app.db.DBHelper;
 import com.example.app.db.JingZhiDBHelper;
 import com.example.app.model.Jingzhi;
@@ -31,15 +32,25 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SerachAddActivity extends BackActivity implements SearchView.OnQueryTextListener {
-    private SearchAdapter adapter;
+
     private ListView listView;
     private JingZhiDBHelper jingZhiDBHelper;
     private TextView textView_result;
+    private List<Jingzhi> jingzhis=new ArrayList<>();
+    private SearchJingzhiAdapter searchJingzhiAdapter;
+
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         jingZhiDBHelper =new JingZhiDBHelper(DBHelper.getRealm());
+         searchJingzhiAdapter=new SearchJingzhiAdapter(this,jingzhis);
+        listView = (ListView) this.findViewById(R.id.listView);
+        listView.setAdapter(searchJingzhiAdapter);
+        updatepage();
     }
-
+    private void updatepage(){
+        searchJingzhiAdapter.setData(jingzhis);
+        searchJingzhiAdapter.notifyDataSetChanged();
+    }
     @Override
     protected int getContentViewId() {
         return R.layout.activity_search_add;
@@ -53,11 +64,7 @@ public class SerachAddActivity extends BackActivity implements SearchView.OnQuer
         super.onCreateOptionsMenu(menu);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout searchLayout = (LinearLayout) inflater.inflate(R.layout.search_input_text, null);
-        adapter = new SearchAdapter(this, R.id.listView);
-        listView = (ListView) this.findViewById(R.id.listView);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(adapter);
-        textView_result = (TextView) findViewById(R.id.text_search);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
@@ -90,7 +97,8 @@ public class SerachAddActivity extends BackActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String value) {
-
+        jingzhis=jingZhiDBHelper.serachJingzhi(value);
+        updatepage();
         return false;
     }
 

@@ -4,12 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
 
+import com.facebook.stetho.Stetho;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;
 
@@ -32,6 +34,11 @@ public class MyApp extends Application  {
         });
         context = this;
         Realm.init(this);
-
+        Stetho.initialize(//Stetho初始化
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                        .build()
+        );
     }
 }

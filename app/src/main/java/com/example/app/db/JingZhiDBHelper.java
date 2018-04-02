@@ -22,8 +22,11 @@ public class JingZhiDBHelper extends DBHelper {
     }
     public List<Jingzhi> serachJingzhi(String mohu){
         return realm.where(Jingzhi.class)
+                .beginGroup()
                 .contains("daima",mohu)
-                .contains("jianpin",mohu)
+                .or()
+                .contains("jianpin",mohu.toUpperCase())
+                .endGroup()
                 .findAll();
 
     }

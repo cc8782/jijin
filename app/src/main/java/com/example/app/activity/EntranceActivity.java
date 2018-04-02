@@ -33,7 +33,7 @@ public class EntranceActivity extends AppCompatActivity {
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         setContentView(imageView);
         WebDataService webDataService=new WebDataService();
-        webDataService.getMainSixPartModel();
+        webDataService.getMainSixPartModel(this);
         Intent intent = getIntent();
         new Handler().postDelayed(new Runnable() {
             @Override
