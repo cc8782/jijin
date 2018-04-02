@@ -2,11 +2,13 @@ package com.example.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.app.R;
@@ -34,20 +36,14 @@ public class MainListAdapter extends BaseAdapter {
     public int getCount() {
         return datas.size();
     }
-
+    public void setData(List<Group> datas){
+        this.datas=datas;
+    }
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if(position==0){
-            return 0;
-        }else {
-            return 1;
-        }
-    }
 
     @Override
     public Object getItem(int position) {
@@ -69,24 +65,26 @@ public class MainListAdapter extends BaseAdapter {
         }else {
             viewHolder= (ViewHolder) convertView.getTag();
         }
-        if(getItemViewType(position)==0){
-            viewHolder.zuheName.setText("名称");
-            viewHolder.zuheJz.setText("累积净值");
-            viewHolder.zuheZdh.setText("最大回撤");
-        }else{
+           final Group group=datas.get(position);
             viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(context,GroupActivity.class);
-                    intent.putExtra(GroupActivity.GROUPID,datas.get(position).getId());
+                    intent.putExtra(GroupActivity.GROUPID,group.getId());
                     context.startActivity(intent);
                 }
             });
 
-            viewHolder.zuheName.setText(datas.get(position).getName()+"");
-            viewHolder.zuheJz.setText(datas.get(position).getLjjz()+"");
-            viewHolder.zuheZdh.setText(String.valueOf(datas.get(position).getMostLost()*100).substring(0,5)+"%");
-        }
+            viewHolder.zuheName.setText(group.getName()+"");
+            if(datas.get(position).getLjjz()>0){
+            viewHolder.relativeLayout.setBackground(AppCompatResources.getDrawable(context,R.drawable.cornerbluelight));
+            }else {
+                viewHolder.relativeLayout.setBackground(AppCompatResources.getDrawable(context,R.drawable.cornerblue));
+            }
+            viewHolder.zuheDate.setText("创建于"+group.getStartDate());
+            viewHolder.ljjz.setText(group.getLjjz()+"");
+            viewHolder.mostlost.setText(String.valueOf(group.getMostLost()*100)+"%");
+
 
         return convertView;
     }
@@ -96,9 +94,14 @@ public class MainListAdapter extends BaseAdapter {
     static class ViewHolder {
         @BindView(R.id.main_item)
         LinearLayout linearLayout;
+
         @BindView(R.id.child_zuhe_name) TextView zuheName;
-        @BindView(R.id.child_zuhe_jz) TextView zuheJz;
-        @BindView(R.id.child_zuhe_zdhc) TextView zuheZdh;
+        @BindView(R.id.child_zuhe_date) TextView zuheDate;
+        @BindView(R.id.main_round)
+        RelativeLayout relativeLayout;
+        @BindView(R.id.main_ljjz) TextView ljjz;
+        @BindView(R.id.child_zuhe_mostlost) TextView mostlost;
+
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

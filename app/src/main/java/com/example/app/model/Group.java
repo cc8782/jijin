@@ -14,7 +14,7 @@ public class Group extends RealmObject {
     @PrimaryKey
     private String Id;
     private String name;//组合名称
-    private Date startDate;//开通时间
+    private String startDate;//开通时间
     private double startValue;//初始市值
     private double totalValue;//总市值
     private double cash;//现金
@@ -23,7 +23,7 @@ public class Group extends RealmObject {
     private double ljjz;
    private RealmList<ChiCang> chicang;
     private int status;//当前状态，0正在使用，1废弃
-    private RealmList<Dayprofit> dayprofits;//每日收益
+    private Double profit;//每日收益
     private Date update;
     public Group() {
     }
@@ -75,11 +75,11 @@ public class Group extends RealmObject {
         this.name = name;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -133,11 +133,11 @@ public class Group extends RealmObject {
         return chicang;
     }
 
-    public RealmList<Dayprofit> getDayprofits() {
-        return dayprofits;
+    public Double getProfit() {
+        return profit;
     }
 
-    public void setDayprofits(RealmList<Dayprofit> dayprofits) {
-        this.dayprofits = dayprofits;
+    public void setProfit(Double profit) {
+        this.profit = profit;
     }
 }

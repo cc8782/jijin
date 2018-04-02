@@ -9,6 +9,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/main_round"
             android:layout_width="80dp"
             android:layout_margin="8dp"
             android:layout_gravity="center"
@@ -27,7 +28,7 @@
                     android:textColor="@color/white2"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:text="1.234"
+                    android:text="1.2345"
                     />
                 <TextView
 
@@ -47,41 +48,47 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_weight="3"
-        android:layout_height="match_parent">
+        android:layout_marginLeft="8dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/child_zuhe_name"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="测试组合001"
-            android:gravity="center"
-            android:textSize="18sp"
-           />
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent">
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+           />
         <TextView
-            android:id="@+id/child_zuhe_jz"
+            android:layout_below="@+id/child_zuhe_name"
+            android:id="@+id/child_zuhe_date"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1.5325"
-            android:gravity="center"
+            android:text="创建于"
             android:textSize="18sp"
             />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="match_parent">
+        android:background="@color/green"
+        android:layout_gravity="center"
+        android:padding="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/child_zuhe_zdhc"
+            android:id="@+id/child_zuhe_mostlost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="-15%"
+            android:text="-1.5%"
             android:gravity="center"
+            android:textColor="@color/white2"
             android:textSize="18sp"
             />
 

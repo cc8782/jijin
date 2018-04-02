@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/black_overlay"
+    android:background="@color/white2"
     android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/group_relayout"
@@ -136,8 +136,35 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@color/grey"
+        android:layout_margin="4dp"
+        android:layout_below="@+id/group_relayout"
+        android:id="@+id/group_search"
+        >
+        <ImageView
+            android:id="@+id/recent_img_search"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_toLeftOf="@+id/recent_text_search"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_search"
+            android:scaleType="fitXY"/>
+        <TextView  android:id="@+id/recent_text_search"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:hint="搜索"
+            android:textSize="14sp"
+            />
+
+
+    </RelativeLayout>
 <ListView
-    android:layout_below="@+id/group_relayout"
+    android:layout_below="@+id/group_search"
     android:id="@+id/main_listview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"></ListView>
