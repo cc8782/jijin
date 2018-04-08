@@ -27,7 +27,7 @@ public class EntranceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ImageView imageView = new ImageView(this);
-        imageView.setImageResource(R.mipmap.bg21);
+        imageView.setImageResource(R.mipmap.timg);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);

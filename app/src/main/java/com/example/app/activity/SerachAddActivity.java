@@ -1,9 +1,7 @@
 package com.example.app.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -11,9 +9,6 @@ import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,11 +19,8 @@ import com.example.app.adapter.SearchJingzhiAdapter;
 import com.example.app.db.DBHelper;
 import com.example.app.db.JingZhiDBHelper;
 import com.example.app.model.Jingzhi;
-import com.example.app.utils.UiUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class SerachAddActivity extends BackActivity implements SearchView.OnQueryTextListener {
@@ -38,11 +30,12 @@ public class SerachAddActivity extends BackActivity implements SearchView.OnQuer
     private TextView textView_result;
     private List<Jingzhi> jingzhis=new ArrayList<>();
     private SearchJingzhiAdapter searchJingzhiAdapter;
-
+    private String groupID;
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         jingZhiDBHelper =new JingZhiDBHelper(DBHelper.getRealm());
-         searchJingzhiAdapter=new SearchJingzhiAdapter(this,jingzhis);
+        groupID=getIntent().getStringExtra(GroupActivity.GROUPID);
+         searchJingzhiAdapter=new SearchJingzhiAdapter(this,jingzhis,groupID);
         listView = (ListView) this.findViewById(R.id.listView);
         listView.setAdapter(searchJingzhiAdapter);
         updatepage();

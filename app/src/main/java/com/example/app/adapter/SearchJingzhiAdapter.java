@@ -1,21 +1,19 @@
 package com.example.app.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.app.R;
 import com.example.app.activity.GroupActivity;
-import com.example.app.model.Group;
+import com.example.app.activity.JiaoyiActivity;
 import com.example.app.model.Jingzhi;
 import com.example.app.utils.UiUtils;
 
@@ -32,10 +30,11 @@ import butterknife.ButterKnife;
 public class SearchJingzhiAdapter extends BaseAdapter {
     private Context context;
     List<Jingzhi> datas = new ArrayList<>();
-
-    public SearchJingzhiAdapter(Context context, List<Jingzhi> datas) {
+    private String groupid;
+    public SearchJingzhiAdapter(Context context, List<Jingzhi> datas,String groupid) {
         this.context = context;
         this.datas = datas;
+        this.groupid=groupid;
     }
 
     @Override
@@ -77,9 +76,11 @@ public class SearchJingzhiAdapter extends BaseAdapter {
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                    Intent intent=new Intent(context,GroupActivity.class);
-//                    intent.putExtra(GroupActivity.GROUPID,jingzhi.getId());
-//                    context.startActivity(intent);
+                    Intent intent=new Intent(context,JiaoyiActivity.class);
+                    intent.putExtra(JiaoyiActivity.JINGZHIDAIMA,jingzhi.getDaima());
+                    intent.putExtra(GroupActivity.GROUPID,groupid);
+                    context.startActivity(intent);
+                ((Activity) context).finish();
             }
         });
 

@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="总市值"/>
+                    android:text="持仓市值"/>
                 <TextView
                     android:id="@+id/marketValue"
                     android:gravity="center"
@@ -130,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white2"
-                    android:text="1.265"
+                    android:text="1"
                     />
 
             </LinearLayout>

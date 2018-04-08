@@ -31,6 +31,7 @@
         <activity android:name=".activity.MyWebActivity" />
         <activity android:name=".activity.GroupActivity" />
         <activity android:name=".activity.SerachAddActivity" />
+        <activity android:name=".activity.JiaoyiActivity" />
 
     </application>
 
