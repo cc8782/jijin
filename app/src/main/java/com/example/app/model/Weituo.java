@@ -15,17 +15,41 @@ public class Weituo extends RealmObject {
     private String groupId;//组合id
     private Date startDate;//提交时间
     private Integer transactionType;//交易类型 0 买；1卖
-    private Jingzhi jingzhi;
-    private String buyCash;
+    private String jingzhiDm;
+    private Double buyCash;
     private Double buyshuifei;
 
-    private Integer sellnumber;
+    private Double sellnumber;
     private Double sellshuifei;
 
     private Integer status; //当前状态，0 委托；1 交易 ；2 撤销
     private Date changeStatusDate; //更改状态时间；
 
     public Weituo() {
+    }
+
+    public Double getBuyCash() {
+        return buyCash;
+    }
+
+    public void setBuyCash(Double buyCash) {
+        this.buyCash = buyCash;
+    }
+
+    public Double getBuyshuifei() {
+        return buyshuifei;
+    }
+
+    public void setBuyshuifei(Double buyshuifei) {
+        this.buyshuifei = buyshuifei;
+    }
+
+    public Double getSellnumber() {
+        return sellnumber;
+    }
+
+    public void setSellnumber(Double sellnumber) {
+        this.sellnumber = sellnumber;
     }
 
     public String getId() {
@@ -60,37 +84,15 @@ public class Weituo extends RealmObject {
         this.transactionType = transactionType;
     }
 
-    public Jingzhi getJingzhi() {
-        return jingzhi;
+    public String getJingzhiDm() {
+        return jingzhiDm;
     }
 
-    public void setJingzhi(Jingzhi jingzhi) {
-        this.jingzhi = jingzhi;
+    public void setJingzhiDm(String jingzhiDm) {
+        this.jingzhiDm = jingzhiDm;
     }
 
-    public String getBuyCash() {
-        return buyCash;
-    }
 
-    public void setBuyCash(String buyCash) {
-        this.buyCash = buyCash;
-    }
-
-    public Double getBuyshuifei() {
-        return buyshuifei;
-    }
-
-    public void setBuyshuifei(Double buyshuifei) {
-        this.buyshuifei = buyshuifei;
-    }
-
-    public Integer getSellnumber() {
-        return sellnumber;
-    }
-
-    public void setSellnumber(Integer sellnumber) {
-        this.sellnumber = sellnumber;
-    }
 
     public Double getSellshuifei() {
         return sellshuifei;

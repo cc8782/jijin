@@ -25,12 +25,21 @@ public class Group extends RealmObject {
     private int status;//当前状态，0正在使用，1废弃
     private Double profit;//每日收益
     private Date update;
+    private Double weituo;
     public Group() {
     }
     public Group(String name,double lijz, double zdhc) {
         this.name=name;
         this.ljjz=lijz;
         this.mostLost=zdhc;
+    }
+
+    public Double getWeituo() {
+        return weituo;
+    }
+
+    public void setWeituo(Double weituo) {
+        this.weituo = weituo;
     }
 
     public double getLjjz() {

@@ -7,10 +7,11 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.app.MyApp;
+import com.example.app.cache.Cache;
 import com.example.app.db.DBHelper;
 import com.example.app.model.Jingzhi;
-import com.example.app.model.MainSixPartSWLYModel;
-import com.example.app.utils.GsonArrayCallback;
+import com.example.app.utils.GsonObjectCallback;
 import com.example.app.utils.OkHttp3Utils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,7 +35,7 @@ public class WebDataService {
         Long time = new Date().getTime();
         String str = time.toString().substring(0, 12);
         String url_swly = "http://fund.eastmoney.com/Data/Fund_JJJZ_Data.aspx?t=1&lx=1&letter=&gsid=&text=&sort=zdf,desc&page=1,9999&feature=|&dt=" + str + "&atfc=&onlySale=0";
-        OkHttp3Utils.doGet(url_swly, new GsonArrayCallback<Jingzhi>() {
+        OkHttp3Utils.doGet(url_swly, new GsonObjectCallback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String data = response.body().string();
@@ -43,6 +44,11 @@ public class WebDataService {
 
                     JSONArray arr = JSONArray.parseArray(jsonObject.getString("datas"));
                     final List<Jingzhi> jingzhis = new ArrayList<>();
+                    String ss1 = arr.get(0).toString();
+                    JSONArray jsonArray1 = JSONArray.parseArray(ss1);
+                    if(jsonArray1.getString(4).equals("")){
+                        return;
+                    }
                     for (int i = 0; i < arr.size(); i++) {
 
                         String ss = arr.get(i).toString();
@@ -58,24 +64,32 @@ public class WebDataService {
                     }
                     DBHelper dbHelper = new DBHelper(DBHelper.getRealm());
                     dbHelper.saveOrUpdate(jingzhis);
-                    Handler handler = OkHttp3Utils.getInstance().getHandler();
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            onUi(jingzhis);
+                    JSONArray dates = JSONArray.parseArray(jsonObject.getString("showday"));
+                    final String updateDate;
+                    if(dates.size()>0){
+                        updateDate =dates.get(0).toString();
+                        Cache.putupdateDate(updateDate, MyApp.context);
+                        Handler handler = OkHttp3Utils.getInstance().getHandler();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                onUi(updateDate);
 
-                        }
-                    });
+                            }
+                        });
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
 
-
             @Override
-            public void onUi(List<Jingzhi> list) {
-                Toast.makeText(context,"更新了"+list.size()+"条数据",Toast.LENGTH_SHORT).show();
+            public void onUi(Object o) {
+                TradingCenter tradingCenter=new TradingCenter();
+                tradingCenter.judement();
+                Toast.makeText(context,"数据更新到"+o.toString(),Toast.LENGTH_SHORT).show();
             }
 
             @Override

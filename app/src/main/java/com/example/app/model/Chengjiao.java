@@ -20,11 +20,11 @@ public class Chengjiao extends RealmObject {
     private Jingzhi jingzhi;
 
     private double buyshuifei;
-    private Integer buyNumber;
+    private Double buyNumber;
     private double buyshengyuCash; //交易结余
 
     private double sellZongjia;
-    private Integer sellnumber;
+    private Double sellnumber;
     private double sellshuifei;
 
     public Chengjiao() {
@@ -94,11 +94,11 @@ public class Chengjiao extends RealmObject {
         this.buyshuifei = buyshuifei;
     }
 
-    public Integer getBuyNumber() {
+    public Double getBuyNumber() {
         return buyNumber;
     }
 
-    public void setBuyNumber(Integer buyNumber) {
+    public void setBuyNumber(Double buyNumber) {
         this.buyNumber = buyNumber;
     }
 
@@ -118,11 +118,11 @@ public class Chengjiao extends RealmObject {
         this.sellZongjia = sellZongjia;
     }
 
-    public Integer getSellnumber() {
+    public Double getSellnumber() {
         return sellnumber;
     }
 
-    public void setSellnumber(Integer sellnumber) {
+    public void setSellnumber(Double sellnumber) {
         this.sellnumber = sellnumber;
     }
 

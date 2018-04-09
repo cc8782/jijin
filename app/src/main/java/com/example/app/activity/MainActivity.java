@@ -1,7 +1,9 @@
 package com.example.app.activity;
 
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -9,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -37,9 +41,12 @@ public class MainActivity extends BackActivity {
 
     @BindView(R.id.main_listview)
     ListView listView;
+
     private List<Group> datas=new ArrayList<>();
     private MainListAdapter mainListAdapter;
     private GroupDBHelper groupDBHelper;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
 
     @Override
     protected int getContentViewId() {
@@ -47,6 +54,16 @@ public class MainActivity extends BackActivity {
     }
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, mPlanetTitles));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+
         groupDBHelper=new GroupDBHelper(DBHelper.getRealm());
         mainListAdapter=new MainListAdapter(this,datas);
         listView.setAdapter(mainListAdapter);
@@ -132,4 +149,13 @@ public class MainActivity extends BackActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+
+
 }

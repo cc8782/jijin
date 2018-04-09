@@ -67,5 +67,19 @@ public class UiUtils {
         DecimalFormat df = new DecimalFormat("0.0");
         return df.format(result);
     }
+    public static String formatShui(String ss){
+        if(ss==null||ss.equals("")||ss.equals("0")||ss.equals("0.00%")){
+            return "0";
+        }
+        String[] number=ss.split("%");
+        Double d=0.0;
+        try {
+            d=  Double.parseDouble(number[0]);
+        }catch (Exception e){
+            e.printStackTrace();
 
+        }
+        return String.valueOf(d/100);
+
+    }
 }

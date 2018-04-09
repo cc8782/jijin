@@ -9,17 +9,10 @@ import android.content.SharedPreferences;
 public class Cache {
     public static String username;
     public static final String FORMAT = "_%s";//为不同用户建立不同cache
-    public static final String USERNAME = "username";
-    public static final String MYTOKEN= "mytoken";
-    public static final String PASSWORD = "password";
-    public static final String NICKNAME = "nickname";
-    public static final String AVATARURL = "avatarurl";
+
     public static final String AUTO_LOGIN = "autologin";
-    public static final String TYPE= "type";
-    public static final String LOGIN_TOKEN= "loginToken";
-    public static final String LOGIN_TYPE= "loginType";
-    public static final String BASE_API_URL="baseApiUrl";
-    public static final String BASE_WEB_URL="baseWebUrl";
+    public static final String UPDATEDATE = "updatedate";
+
 
     public static final String DESC = "desc";
 
@@ -32,7 +25,16 @@ public class Cache {
         editor.putString(key, value);
         editor.apply();
     }
-
+    public static String getupdateDate(Context context) {
+        SharedPreferences sharedPreferences = loginSharedPreferences(context);
+        return sharedPreferences.getString(UPDATEDATE, "");
+    }
+    public static void putupdateDate(String updateDate, Context context) {
+        SharedPreferences sharedPreferences = loginSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(UPDATEDATE,updateDate);
+        editor.apply();
+    }
 
     public static String getAutoLogin(Context context) {
         SharedPreferences sharedPreferences = loginSharedPreferences(context);

@@ -7,17 +7,17 @@ import io.realm.RealmObject;
  */
 
 public class ChiCang extends RealmObject {
-  private Integer chicangliang;
+  private Double chicangliang;
   private Jingzhi jingzhi;
 
   public ChiCang() {
   }
 
-  public Integer getChicangliang() {
+  public Double getChicangliang() {
     return chicangliang;
   }
 
-  public void setChicangliang(Integer chicangliang) {
+  public void setChicangliang(Double chicangliang) {
     this.chicangliang = chicangliang;
   }
 

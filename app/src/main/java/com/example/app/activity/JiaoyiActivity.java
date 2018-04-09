@@ -18,9 +18,13 @@ import com.example.app.db.JingZhiDBHelper;
 import com.example.app.model.ChiCang;
 import com.example.app.model.Group;
 import com.example.app.model.Jingzhi;
+import com.example.app.model.Weituo;
 import com.example.app.utils.UiUtils;
 
+import java.util.Date;
+
 import butterknife.BindView;
+import io.realm.Realm;
 import io.realm.RealmList;
 
 /**
@@ -29,12 +33,12 @@ import io.realm.RealmList;
 
 public class JiaoyiActivity extends BaseActivity {
     public static String JINGZHIDAIMA = "jignzhidaima";
-    public static String INTENTSTATUS="intentstatus";
-    public  Integer status;
+    public static String INTENTSTATUS = "intentstatus";
+    public Integer status;
 
     private String groupId;
     private String jingzhiDm;
-    private Double tmp=0.0;
+    private Double tmp = 0.0;
     @BindView(R.id.jingzhi_name)
     TextView jingzhiName;
     @BindView(R.id.jingzhi_daima)
@@ -70,6 +74,7 @@ public class JiaoyiActivity extends BaseActivity {
     @BindView(R.id.jiaoyi_queren)
     Button jiaoyiQueren;
     private Group group;
+    private Jingzhi jingzhi;
 
 
     @Override
@@ -86,7 +91,7 @@ public class JiaoyiActivity extends BaseActivity {
 
 
         JingZhiDBHelper jingZhiDBHelper = new JingZhiDBHelper(DBHelper.getRealm());
-        final Jingzhi jingzhi = jingZhiDBHelper.findJingzhiByID(jingzhiDm);
+         jingzhi = jingZhiDBHelper.findJingzhiByID(jingzhiDm);
 
         if (UiUtils.bigThenZero(jingzhi.getRzzl())) {
             jingzhiRzzl.setTextColor(ContextCompat.getColor(this, R.color.red));
@@ -101,19 +106,22 @@ public class JiaoyiActivity extends BaseActivity {
         jingzhiLjjz.setText(UiUtils.formatdouble(jingzhi.getLjjz1()));
         jingzhiRzzz.setText(UiUtils.formatdouble(jingzhi.getRzzz()));
         jingzhiRzzl.setText(UiUtils.formatdouble(jingzhi.getRzzl()));
-        buyShui.setText(jingzhi.getShfl());
-        GroupDBHelper groupDBHelper=new GroupDBHelper(DBHelper.getRealm());
-         group=groupDBHelper.findGroupByID(groupId);
+
+
+
+
+        final GroupDBHelper groupDBHelper = new GroupDBHelper(DBHelper.getRealm());
+        group = groupDBHelper.findGroupByID(groupId);
 
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.buy:
-                      buy();
+                        buy();
                         break;
                     case R.id.sell:
-                       sell();
+                        sell();
                         break;
                 }
 
@@ -123,21 +131,21 @@ public class JiaoyiActivity extends BaseActivity {
         cangWei.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(tmp==0){
+                if (tmp == 0) {
                     return;
                 }
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.one_eight:
-                        buyEditText.setText(Math.ceil(tmp/8)+"");
+                        buyEditText.setText(Math.ceil(tmp / 8) + "");
                         break;
                     case R.id.one_four:
-                        buyEditText.setText(Math.ceil(tmp/4)+"");
+                        buyEditText.setText(Math.ceil(tmp / 4) + "");
                         break;
                     case R.id.one_two:
-                        buyEditText.setText(Math.ceil(tmp/2)+"");
+                        buyEditText.setText(Math.ceil(tmp / 2) + "");
                         break;
                     case R.id.one_one:
-                        buyEditText.setText(Math.ceil(tmp)+"");
+                        buyEditText.setText(Math.ceil(tmp) + "");
                         break;
 
                 }
@@ -147,10 +155,43 @@ public class JiaoyiActivity extends BaseActivity {
         jiaoyiQueren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(status==0){
-                    Toast.makeText(JiaoyiActivity.this,"买入"+jingzhi.getName()+buyEditText.getText().toString()+"元",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(JiaoyiActivity.this,"卖出"+jingzhi.getName()+buyEditText.getText().toString()+"份",Toast.LENGTH_SHORT).show();
+                if(tmp<Double.parseDouble(buyEditText.getText().toString())){
+                    if(status == 0){
+                        Toast.makeText(JiaoyiActivity.this, "委托买入金额不能大于组合现金", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(JiaoyiActivity.this, "委托卖出份额不能大于组合持有份额", Toast.LENGTH_SHORT).show();
+                    }
+                    return;
+                }
+                Weituo weituo = new Weituo();
+                weituo.setId(String.valueOf(System.currentTimeMillis()));
+                weituo.setGroupId(groupId);
+                weituo.setJingzhiDm(jingzhiDm);
+                DBHelper dbHelper = new DBHelper(DBHelper.getRealm());
+                if (status == 0) {
+                    weituo.setBuyCash(Double.parseDouble( buyEditText.getText().toString()));
+                    weituo.setBuyshuifei(Double.parseDouble(buyShui.getText().toString()));
+                    weituo.setTransactionType(0);
+                    weituo.setStatus(0);
+                    weituo.setStartDate(new Date());
+                    dbHelper.saveOrUpdate(weituo);
+                    Realm realm=DBHelper.getRealm();
+                    realm.beginTransaction();
+                    group.setCash(group.getCash()-weituo.getBuyCash());
+                    group.setWeituo(weituo.getBuyCash()+group.getWeituo());
+                  realm.commitTransaction();
+                    dbHelper.saveOrUpdate(group);
+                    Toast.makeText(JiaoyiActivity.this, "委托买入" + jingzhi.getName() + buyEditText.getText().toString() + "元", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    weituo.setSellnumber(Double.parseDouble(buyEditText.getText().toString()));
+                    weituo.setSellshuifei(Double.parseDouble(buyShui.getText().toString()));
+                    weituo.setTransactionType(1);
+                    weituo.setStatus(0);
+                    weituo.setStartDate(new Date());
+                    dbHelper.saveOrUpdate(weituo);
+                    Toast.makeText(JiaoyiActivity.this, "委托卖出" + jingzhi.getName() + buyEditText.getText().toString() + "份", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });
@@ -159,41 +200,46 @@ public class JiaoyiActivity extends BaseActivity {
     private void setData() {
 
     }
-    private void buy(){
+
+    private void buy() {
         buyEditText.setText("");
         cangWei.clearCheck();
-        tmp=group.getCash();
-        jiaoyiCash.setText("可用现金 "+group.getCash()+"元");
+        tmp = group.getCash();
+        jiaoyiCash.setText("可用现金 " + group.getCash() + "元");
         buyText.setText("买入金额");
         jiaoyiQueren.setBackgroundColor(ContextCompat.getColor(JiaoyiActivity.this, R.color.red));
         jiaoyiQueren.setText("买入");
-        status=0;
+        buyShui.setText(UiUtils.formatShui(jingzhi.getSgfl()));
+        status = 0;
     }
-    private void sell(){
+
+    private void sell() {
         cangWei.clearCheck();
         buyEditText.setText("");
-        RealmList<ChiCang> chiCangs=group.getChicang();
-        if(chiCangs.size()==0){
+        RealmList<ChiCang> chiCangs = group.getChicang();
+        if (chiCangs.size() == 0) {
             jiaoyiCash.setText("无可售份额");
-            tmp= 0.0;
+            tmp = 0.0;
         }
-        for(ChiCang chiCang : chiCangs){
-            if(chiCang.getJingzhi().getDaima().equals(jingzhiDm)){
-                jiaoyiCash.setText("可售份额"+ chiCang.getChicangliang()+"份");
-                tmp= Double.valueOf(chiCang.getChicangliang());
+        for (ChiCang chiCang : chiCangs) {
+            if (chiCang.getJingzhi().getDaima().equals(jingzhiDm)) {
+                jiaoyiCash.setText("可售份额" + chiCang.getChicangliang() + "份");
+                tmp = Double.valueOf(chiCang.getChicangliang());
             }
         }
         buyText.setText("卖出份额");
         jiaoyiQueren.setBackgroundColor(ContextCompat.getColor(JiaoyiActivity.this, R.color.green));
         jiaoyiQueren.setText("卖出");
-        status=1;
+        buyShui.setText(UiUtils.formatShui(jingzhi.getShfl()));
+        status = 1;
     }
+
     @Override
     protected void onResume() {
-        if( getIntent().getIntExtra(INTENTSTATUS,0)==0){
-           buy();
-        }else {
-       sell();
+        if (getIntent().getIntExtra(INTENTSTATUS, 0) == 0) {
+            buy();
+        } else {
+            sell();
         }
         super.onResume();
     }

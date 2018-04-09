@@ -30,6 +30,7 @@ public class GroupActivity extends BaseActivity {
     RelativeLayout relativeLayout;
     @BindView(R.id.cash)
     TextView cashText;
+    private GroupDBHelper groupDBHelper;
 
     @Override
     protected int getContentViewId() {
@@ -47,7 +48,11 @@ public class GroupActivity extends BaseActivity {
                 GroupActivity.this.startActivity(intent);
             }
         });
-        GroupDBHelper groupDBHelper=new GroupDBHelper(DBHelper.getRealm());
+         groupDBHelper=new GroupDBHelper(DBHelper.getRealm());
+         updateData();
+
+    }
+    private void updateData(){
         Group group=groupDBHelper.findGroupByID(groupId);
         if(group!=null){
             totalText.setText(group.getTotalValue()+"");
@@ -56,12 +61,15 @@ public class GroupActivity extends BaseActivity {
             cashText.setText(group.getCash()+"");
         }
     }
-
     private void setData() {
 
     }
 
-
+    @Override
+    protected void onResume() {
+        updateData();
+        super.onResume();
+    }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
