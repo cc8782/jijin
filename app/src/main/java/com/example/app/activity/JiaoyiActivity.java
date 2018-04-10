@@ -155,6 +155,14 @@ public class JiaoyiActivity extends BaseActivity {
         jiaoyiQueren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(buyEditText.getText().toString()==null || buyEditText.getText().toString().equals("")){
+                    if(status == 0){
+                        Toast.makeText(JiaoyiActivity.this, "委托买入金额不能为空", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(JiaoyiActivity.this, "委托卖出份额不能为空", Toast.LENGTH_SHORT).show();
+                    }
+                    return;
+                }
                 if(tmp<Double.parseDouble(buyEditText.getText().toString())){
                     if(status == 0){
                         Toast.makeText(JiaoyiActivity.this, "委托买入金额不能大于组合现金", Toast.LENGTH_SHORT).show();
@@ -163,6 +171,7 @@ public class JiaoyiActivity extends BaseActivity {
                     }
                     return;
                 }
+
                 Weituo weituo = new Weituo();
                 weituo.setId(String.valueOf(System.currentTimeMillis()));
                 weituo.setGroupId(groupId);
@@ -177,8 +186,13 @@ public class JiaoyiActivity extends BaseActivity {
                     dbHelper.saveOrUpdate(weituo);
                     Realm realm=DBHelper.getRealm();
                     realm.beginTransaction();
-                    group.setCash(group.getCash()-weituo.getBuyCash());
-                    group.setWeituo(weituo.getBuyCash()+group.getWeituo());
+                    group.setCash(group.getCash()-Double.parseDouble( buyEditText.getText().toString()));
+                    if(null!=group.getWeituo()&&0.0!=group.getWeituo()){
+                        group.setWeituo(Double.parseDouble( buyEditText.getText().toString())+group.getWeituo());
+                    }else {
+                        group.setWeituo(Double.parseDouble( buyEditText.getText().toString()));
+                    }
+
                   realm.commitTransaction();
                     dbHelper.saveOrUpdate(group);
                     Toast.makeText(JiaoyiActivity.this, "委托买入" + jingzhi.getName() + buyEditText.getText().toString() + "元", Toast.LENGTH_SHORT).show();

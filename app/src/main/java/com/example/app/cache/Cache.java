@@ -12,6 +12,7 @@ public class Cache {
 
     public static final String AUTO_LOGIN = "autologin";
     public static final String UPDATEDATE = "updatedate";
+    public static final String DAOCHUNAME = "daochuName";
 
 
     public static final String DESC = "desc";
@@ -33,6 +34,16 @@ public class Cache {
         SharedPreferences sharedPreferences = loginSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(UPDATEDATE,updateDate);
+        editor.apply();
+    }
+    public static String getDaoChuName(Context context) {
+        SharedPreferences sharedPreferences = loginSharedPreferences(context);
+        return sharedPreferences.getString(DAOCHUNAME, "");
+    }
+    public static void putDaoChuName(String updateDate, Context context) {
+        SharedPreferences sharedPreferences = loginSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(DAOCHUNAME,updateDate);
         editor.apply();
     }
 

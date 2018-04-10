@@ -32,12 +32,16 @@ public class TradingCenter {
     public void judement() {
         WeituoDBHelper weituoDBHelper = new WeituoDBHelper(DBHelper.getRealm());
         List<Weituo> weituos = weituoDBHelper.findbyStatus(0);
+        if (weituos.size()==0){
+            return;
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
         String updatedate = Cache.getupdateDate(MyApp.context);
         if (updatedate.equals("")) {
             return;
         }
+        Realm realm=DBHelper.getRealm();
         try {
             for (Weituo weituo : weituos) {
                 int hour = Integer.parseInt(hourFormat.format(weituo.getStartDate()));
@@ -45,21 +49,26 @@ public class TradingCenter {
                 Calendar cd2 = Calendar.getInstance();
                 cd2.setTime(dateFormat.parse(updatedate));
                 cd1.setTime(weituo.getStartDate());
+                SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
                 if (hour > 15) {
                     cd1.add(Calendar.DATE, 1);
                 }
-                if (cd1.after(cd2)) {
-                    trad(weituo);
+                if (fmt.format(cd1.getTime()).equals(fmt.format(cd2.getTime()))) {
+                    trad(weituo ,realm);
                 }
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        if(realm!=null){
+            realm.close();
+        }
+
     }
-    private void trad(Weituo weituo){
+    private void trad(Weituo weituo,Realm realm){
         Group group=groupDBHelper.findGroupByID(weituo.getGroupId());
         Jingzhi jingzhi=jingZhiDBHelper.findJingzhiByID(weituo.getJingzhiDm());
-        Realm realm=DBHelper.getRealm();
+
         Chengjiao chengjiao=new Chengjiao();
         chengjiao.setId(new Date().toString());
         chengjiao.setWeiTuoId(weituo.getId());
@@ -68,20 +77,20 @@ public class TradingCenter {
         chengjiao.setJingzhi(jingzhi);
         if(weituo.getTransactionType()==0){
             chengjiao.setTransactionType(weituo.getTransactionType());
-            Double number=(weituo.getBuyCash()/Double.parseDouble(UiUtils.formatShui(jingzhi.getDwjz1())))/(weituo.getBuyshuifei()+1);
-            chengjiao.setBuyshuifei(weituo.getBuyCash()-number*Double.parseDouble(UiUtils.formatShui(jingzhi.getDwjz1())));
+            Double number=(weituo.getBuyCash()/UiUtils.formatJingzhi(jingzhi.getDwjz1()))/(weituo.getBuyshuifei()+1);
+            chengjiao.setBuyshuifei(weituo.getBuyCash()-number*UiUtils.formatJingzhi(jingzhi.getDwjz1()));
             chengjiao.setBuyCash(weituo.getBuyCash());
             chengjiao.setBuyNumber(number);
-            chengjiao.setBuyCash(weituo.getBuyshuifei());
+
 
             realm.beginTransaction();
-            group.setMarketValue(group.getMarketValue()+number*Double.parseDouble(UiUtils.formatShui(jingzhi.getDwjz1())));
+            group.setMarketValue(group.getMarketValue()+number*UiUtils.formatJingzhi(jingzhi.getDwjz1()));
             RealmList<ChiCang> chiCangs=group.getChicang();
             int flag=0;
             for(ChiCang chiCang:chiCangs){
                 if(chiCang.getJingzhi().getDaima().equals(jingzhi.getDaima())){
                     Jingzhi oldJingzhi=chiCang.getJingzhi();
-                    oldJingzhi.setDwjz1(String.valueOf((Double.parseDouble(UiUtils.formatShui(jingzhi.getDwjz1()))*chiCang.getChicangliang()+number*Double.parseDouble(UiUtils.formatShui(jingzhi.getDwjz1())))/(chiCang.getChicangliang()+number)));
+                    oldJingzhi.setDwjz1(String.valueOf((UiUtils.formatJingzhi(jingzhi.getDwjz1())*chiCang.getChicangliang()+number*UiUtils.formatJingzhi(jingzhi.getDwjz1()))/(chiCang.getChicangliang()+number)));
                    chiCang.setJingzhi(oldJingzhi);
                     chiCang.setChicangliang(chiCang.getChicangliang()+number);
                     flag=1;
@@ -99,7 +108,7 @@ public class TradingCenter {
 
         }else if(weituo.getTransactionType()==1){
             chengjiao.setTransactionType(weituo.getTransactionType());
-            chengjiao.setSellZongjia(weituo.getSellnumber()*Double.parseDouble(UiUtils.formatShui(jingzhi.getDwjz1())));
+            chengjiao.setSellZongjia(weituo.getSellnumber()*UiUtils.formatJingzhi(jingzhi.getDwjz1()));
             chengjiao.setSellnumber(weituo.getSellnumber());
             chengjiao.setSellshuifei(chengjiao.getSellZongjia()*weituo.getSellshuifei());
             realm.beginTransaction();
@@ -113,7 +122,7 @@ public class TradingCenter {
                         return;
                     }
                     Jingzhi oldJingzhi=chiCang.getJingzhi();
-                    oldJingzhi.setDwjz1(String.valueOf((Double.parseDouble(UiUtils.formatShui(oldJingzhi.getDwjz1()))*chiCang.getChicangliang()-chengjiao.getSellZongjia())/(chiCang.getChicangliang()-chengjiao.getSellnumber())));
+                    oldJingzhi.setDwjz1(String.valueOf((UiUtils.formatJingzhi(oldJingzhi.getDwjz1())*chiCang.getChicangliang()-chengjiao.getSellZongjia())/(chiCang.getChicangliang()-chengjiao.getSellnumber())));
                     chiCang.setJingzhi(oldJingzhi);
                     chiCang.setChicangliang(chiCang.getChicangliang()-chengjiao.getSellnumber());
                 }
@@ -122,9 +131,13 @@ public class TradingCenter {
             group.setUpdate(new Date());
             realm.commitTransaction();
         }
-
+        realm.beginTransaction();
+        weituo.setStatus(1);
+        realm.commitTransaction();
         DBHelper dbHelper=new DBHelper(DBHelper.getRealm());
         dbHelper.saveOrUpdate(chengjiao);
+        dbHelper.saveOrUpdate(weituo);
+
     }
     public static String addDay(Date d, int n) {
         try {

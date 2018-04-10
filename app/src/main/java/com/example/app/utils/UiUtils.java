@@ -67,6 +67,14 @@ public class UiUtils {
         DecimalFormat df = new DecimalFormat("0.0");
         return df.format(result);
     }
+    public static Double formatJingzhi(String ss){
+        if(ss==null||ss.equals("")||ss.equals("0")||ss.equals("0.00%")){
+            return 0.0;
+        }
+
+        return Double.parseDouble(ss);
+
+    }
     public static String formatShui(String ss){
         if(ss==null||ss.equals("")||ss.equals("0")||ss.equals("0.00%")){
             return "0";

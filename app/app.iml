@@ -124,6 +124,7 @@
     <orderEntry type="library" name="android.arch.lifecycle:runtime-1.0.0" level="project" />
     <orderEntry type="library" name="com.parse.bolts:bolts-tasks:1.4.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-26.1.0" level="project" />
+    <orderEntry type="library" name="com.sun.mail:android-activation:1.5.5@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-annotations:26.1.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-ui-26.1.0" level="project" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.2@jar" level="project" />
@@ -154,6 +155,7 @@
     <orderEntry type="library" name="com.facebook.soloader:soloader-0.3.0" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-utils-26.1.0" level="project" />
     <orderEntry type="library" name="com.facebook.fresco:fbcore-1.8.1" level="project" />
+    <orderEntry type="library" name="com.sun.mail:android-mail:1.5.5@jar" level="project" />
     <orderEntry type="library" name="com.facebook.stetho:stetho-1.5.0" level="project" />
     <orderEntry type="library" name="com.jakewharton:butterknife-8.8.1" level="project" />
     <orderEntry type="library" name="commons-cli:commons-cli:1.2@jar" level="project" />

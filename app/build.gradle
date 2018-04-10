@@ -71,4 +71,6 @@ dependencies {
     compile 'com.uphyca:stetho_realm:2.2.2'
     implementation 'com.facebook.fresco:fresco:1.8.1'
     implementation files('libs/jxl.jar')
+    compile 'com.sun.mail:android-mail:1.5.5'
+    compile 'com.sun.mail:android-activation:1.5.5'
 }

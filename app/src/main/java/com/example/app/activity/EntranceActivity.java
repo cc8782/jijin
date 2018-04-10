@@ -34,6 +34,8 @@ public class EntranceActivity extends AppCompatActivity {
         setContentView(imageView);
         WebDataService webDataService=new WebDataService();
         webDataService.getMainSixPartModel(this);
+//        TradingCenter tradingCenter=new TradingCenter();
+//        tradingCenter.judement();
         Intent intent = getIntent();
         new Handler().postDelayed(new Runnable() {
             @Override
