@@ -53,7 +53,7 @@ public class TradingCenter {
                 if (hour > 15) {
                     cd1.add(Calendar.DATE, 1);
                 }
-                if (!fmt.format(cd1.getTime()).equals(fmt.format(cd2.getTime()))) {
+                if (fmt.format(cd1.getTime()).equals(fmt.format(cd2.getTime()))) {
                     trad(weituo ,realm);
                 }
             }
@@ -153,8 +153,6 @@ public class TradingCenter {
           Date updateDate=  dateFormat.parse(Cache.getupdateDate(MyApp.context));
             if(groups.get(0).getUpdate()==null||groups.get(0).getUpdate().before(updateDate)){
               updateGroupValue(groups,updateDate);
-            }else {
-                updateGroupValue(groups,updateDate);
             }
         } catch (ParseException e) {
             e.printStackTrace();

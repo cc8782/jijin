@@ -18,32 +18,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="269182a4-9f64-4807-9c37-a881a4f5cd0b" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_sun_mail_android_activation_1_5_5_jar.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_sun_mail_android_mail_1_5_5_jar.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/app/adapter/GroupListAdapter.java" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.lock" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.1/javaCompile/classAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/classAnalysis.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.1/javaCompile/javaCompile.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/javaCompile.lock" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.1/javaCompile/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/taskHistory.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.1/javaCompile/taskJars.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/taskJars.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/fileSnapshots.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/app/activity/EntranceActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/app/activity/EntranceActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/app/activity/GroupActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/app/activity/GroupActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/app/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/app/activity/MainActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/app/adapter/MainListAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/app/adapter/MainListAdapter.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/app/db/JingZhiDBHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/app/db/JingZhiDBHelper.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/app/service/TradingCenter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/app/service/TradingCenter.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/app/service/WebDataService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/app/service/WebDataService.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/app/utils/UiUtils.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/app/utils/UiUtils.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_group.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_group.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/child_group_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/child_group_item.xml" />
     </list>
     <ignored path="jinganapp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -149,7 +125,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WebDataService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WebDataService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/app/service/WebDataService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
@@ -159,11 +135,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TradingCenter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TradingCenter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/app/service/TradingCenter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="144" column="73" lean-forward="false" selection-start-line="144" selection-start-column="6" selection-end-line="144" selection-end-column="73" />
+            <state relative-caret-position="-668">
+              <caret line="157" column="32" lean-forward="true" selection-start-line="157" selection-start-column="32" selection-end-line="157" selection-end-column="32" />
               <folding>
                 <element signature="method#addDay#0;class#TradingCenter#0" expanded="false" />
               </folding>
@@ -2042,7 +2018,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/app/utils/ExcleUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/app/utils/UiUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/app/adapter/MainListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/app/service/TradingCenter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/child_group_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/app/adapter/GroupListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_group.xml" />
@@ -2050,6 +2025,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/app/activity/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/app/activity/EntranceActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/app/service/WebDataService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/app/service/TradingCenter.java" />
       </list>
     </option>
   </component>
@@ -2275,7 +2251,7 @@
     <property name="android.profiler.active" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="show.do.not.ask.upgrade.gradle.plugin" value="3.0.1" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1523457241521" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1523457392164" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -2973,7 +2949,14 @@
       <option name="project" value="LOCAL" />
       <updated>1523356246279</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="youjian">
+      <created>1523457385095</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1523457385095</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2987,6 +2970,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.87842464" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -3004,7 +2988,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22206303" sideWeight="0.40384614" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20277777" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14567527" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -3637,16 +3621,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/app/service/TradingCenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="144" column="73" lean-forward="false" selection-start-line="144" selection-start-column="6" selection-end-line="144" selection-end-column="73" />
-          <folding>
-            <element signature="method#addDay#0;class#TradingCenter#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/app/activity/EntranceActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="700">
@@ -3660,6 +3634,16 @@
         <state relative-caret-position="210">
           <caret line="47" column="60" lean-forward="false" selection-start-line="47" selection-start-column="60" selection-end-line="47" selection-end-column="60" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/app/service/TradingCenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-668">
+          <caret line="157" column="32" lean-forward="true" selection-start-line="157" selection-start-column="32" selection-end-line="157" selection-end-column="32" />
+          <folding>
+            <element signature="method#addDay#0;class#TradingCenter#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
