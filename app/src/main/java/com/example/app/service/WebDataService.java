@@ -1,17 +1,22 @@
 package com.example.app.service;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.app.MyApp;
+import com.example.app.R;
 import com.example.app.cache.Cache;
 import com.example.app.db.DBHelper;
 import com.example.app.model.Jingzhi;
 import com.example.app.utils.GsonObjectCallback;
+import com.example.app.utils.NetWorkUtils;
 import com.example.app.utils.OkHttp3Utils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,6 +37,34 @@ public class WebDataService {
     private int flag;
 
     public void getMainSixPartModel(final Context context) {
+        if (!NetWorkUtils.isNetworkConnected(context)) {
+            Toast.makeText(context, "网络没有连接。。。", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (NetWorkUtils.getConnectedType(context) != 1) {
+            final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+            builder.setMessage("当前不是WIFI连接，是否继续更新数据？");
+            builder.setTitle("设置导出Excle名字");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    updatejignzhi(context);
+                }
+            });
+
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
+        }
+
+
+    }
+
+    private void updatejignzhi(final Context context) {
         Long time = new Date().getTime();
         String str = time.toString().substring(0, 12);
         String url_swly = "http://fund.eastmoney.com/Data/Fund_JJJZ_Data.aspx?t=1&lx=1&letter=&gsid=&text=&sort=zdf,desc&page=1,9999&feature=|&dt=" + str + "&atfc=&onlySale=0";
@@ -46,7 +79,7 @@ public class WebDataService {
                     final List<Jingzhi> jingzhis = new ArrayList<>();
                     String ss1 = arr.get(0).toString();
                     JSONArray jsonArray1 = JSONArray.parseArray(ss1);
-                    if(jsonArray1.getString(4).equals("")){
+                    if (jsonArray1.getString(4).equals("")) {
                         return;
                     }
                     for (int i = 0; i < arr.size(); i++) {
@@ -66,8 +99,8 @@ public class WebDataService {
                     dbHelper.saveOrUpdate(jingzhis);
                     JSONArray dates = JSONArray.parseArray(jsonObject.getString("showday"));
                     final String updateDate;
-                    if(dates.size()>0){
-                        updateDate =dates.get(0).toString();
+                    if (dates.size() > 0) {
+                        updateDate = dates.get(0).toString();
                         Cache.putupdateDate(updateDate, MyApp.context);
                         Handler handler = OkHttp3Utils.getInstance().getHandler();
                         handler.post(new Runnable() {
@@ -87,9 +120,10 @@ public class WebDataService {
 
             @Override
             public void onUi(Object o) {
-                TradingCenter tradingCenter=new TradingCenter();
-                tradingCenter.judement();
-                Toast.makeText(context,"数据更新到"+o.toString(),Toast.LENGTH_SHORT).show();
+                TradingCenter tradingCenter = new TradingCenter();
+                tradingCenter.judementWeituo();
+                tradingCenter.judementGroup();
+                Toast.makeText(context, "数据更新到" + o.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -97,8 +131,6 @@ public class WebDataService {
                 e.toString();
             }
         });
-
-
     }
 
     private void updateData() {

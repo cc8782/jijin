@@ -16,7 +16,7 @@ public class Group extends RealmObject {
     private String name;//组合名称
     private String startDate;//开通时间
     private double startValue;//初始市值
-    private double totalValue;//总市值
+    private double totalValue;//总值
     private double cash;//现金
     private double marketValue;//市值
     private double mostLost;//最大回撤
@@ -26,6 +26,7 @@ public class Group extends RealmObject {
     private Double profit;//每日收益
     private Date update;
     private Double weituo;
+
     public Group() {
     }
     public Group(String name,double lijz, double zdhc) {

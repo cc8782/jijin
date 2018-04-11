@@ -42,7 +42,7 @@ android:padding="8dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="8dp"
-            android:text="导出名："
+            android:text="导出名"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_marginTop="8dp"
@@ -63,7 +63,7 @@ android:padding="8dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="8dp"
-            android:text="点击更新："
+            android:text="点击更新"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

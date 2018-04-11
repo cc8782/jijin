@@ -13,8 +13,8 @@ public class SendMailUtil {
     //qq
     private static final String HOST = "smtp.qq.com";
     private static final String PORT = "587";
-    private static final String FROM_ADD = "teprinciple@foxmail.com";
-    private static final String FROM_PSW = "lfrlpganzjrwbeci";
+    private static final String FROM_ADD = "41549733@qq.com";
+    private static final String FROM_PSW = "vfkyvdcifusdbjhj";
 
 //    //163
 //    private static final String HOST = "smtp.163.com";

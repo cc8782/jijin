@@ -286,7 +286,7 @@ public class OkHttp3Utils {
             // 无网络时，设置超时为1天
             int maxStale = 60 * 60 * 24;
             Request request = chain.request();
-            if (NetWorkUtils.isNetWorkAvailable(MyApp.context)) {
+            if (NetWorkUtils.isNetworkConnected(MyApp.context)) {
                 //有网络时只从网络获取
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
             } else {
@@ -297,7 +297,7 @@ public class OkHttp3Utils {
                 Looper.loop();*/
             }
             Response response = chain.proceed(request);
-            if (NetWorkUtils.isNetWorkAvailable(MyApp.context)) {
+            if (NetWorkUtils.isNetworkConnected(MyApp.context)) {
                 response = response.newBuilder()
                         .removeHeader("Pragma")
                         .header("Cache-Control", "public, max-age=" + maxAge)

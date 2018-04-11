@@ -1,5 +1,11 @@
 package com.example.app.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -12,6 +18,7 @@ import java.text.DecimalFormat;
  */
 
 public class UiUtils {
+
     public static String formatdouble(String str) {
         if (null == str || "".equals(str)) {
             return "0.0";
@@ -19,7 +26,26 @@ public class UiUtils {
             return str;
         }
     }
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE" };
 
+
+    public static void verifyStoragePermissions(Activity activity) {
+
+        try {
+            //检测是否有写的权限
+            int permission = ActivityCompat.checkSelfPermission(activity,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // 没有写的权限，去申请写的权限，会弹出对话框
+                ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static Boolean bigThenZero(String str) {
         if (null == str || "".equals(str)) {
             return false;
@@ -66,6 +92,16 @@ public class UiUtils {
         float result = Float.parseFloat(num);
         DecimalFormat df = new DecimalFormat("0.0");
         return df.format(result);
+    }
+    public static String format2wei(String num) {
+        float result = Float.parseFloat(num);
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(result);
+    }
+    public static String format2wei(Double num) {
+
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(num);
     }
     public static Double formatJingzhi(String ss){
         if(ss==null||ss.equals("")||ss.equals("0")||ss.equals("0.00%")){

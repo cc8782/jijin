@@ -2,7 +2,6 @@ package com.example.app.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -12,21 +11,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app.MyApp;
 import com.example.app.R;
 import com.example.app.adapter.MainListAdapter;
+import com.example.app.cache.Cache;
 import com.example.app.db.DBHelper;
 import com.example.app.db.GroupDBHelper;
 import com.example.app.mail.SendMailUtil;
 import com.example.app.model.ChiCang;
 import com.example.app.model.Group;
+import com.example.app.service.TradingCenter;
+import com.example.app.service.WebDataService;
+import com.example.app.utils.ExcleUtils;
+import com.example.app.utils.UiUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +47,10 @@ public class MainActivity extends BackActivity {
 
     @BindView(R.id.main_listview)
     ListView listView;
-
+    @BindView(R.id.daochuname)
+    TextView daochuNameText;
+    @BindView(R.id.updateDate)
+    TextView updateDateText;
     private List<Group> datas = new ArrayList<>();
     private MainListAdapter mainListAdapter;
     private GroupDBHelper groupDBHelper;
@@ -62,6 +67,8 @@ public class MainActivity extends BackActivity {
         groupDBHelper = new GroupDBHelper(DBHelper.getRealm());
         mainListAdapter = new MainListAdapter(this, datas);
         listView.setAdapter(mainListAdapter);
+        daochuNameText.setText("名字:"+Cache.getDaoChuName(MyApp.context));
+        updateDateText.setText(Cache.getupdateDate(MyApp.context));
         updateList();
     }
 
@@ -83,34 +90,52 @@ public class MainActivity extends BackActivity {
 
     @OnClick(R.id.daochu)
     public void daochu() {
-        File file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.txt");
-        OutputStream os = null;
+        UiUtils.verifyStoragePermissions(this);
+       // File file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.txt");
+        File file= null;
         try {
-            os = new FileOutputStream(file);
-            String str = "hello world";
-            byte[] data = str.getBytes();
-            os.write(data);
-        } catch (FileNotFoundException e) {
+
+            file = ExcleUtils.writeExcel(this);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }finally{
-            try {
-                if (os != null) os.close();
-            } catch (IOException e) {
-            }
         }
-        SendMailUtil.send(file, editText.getText().toString());
+
+        SendMailUtil.send(file, "41549733@qq.com");
     }
 
     @OnClick(R.id.daochuname)
     public void setDaoChuName() {
-        Toast.makeText(this, "daochuname", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.main_dialog, null);
+        final EditText zuheName = view.findViewById(R.id.dialog_zuhe_name);
+        final EditText zuheTotal = view.findViewById(R.id.dialog_zuhe_total);
+        zuheTotal.setVisibility(View.GONE);
+        builder.setView(view);
+        builder.setTitle("设置导出Excle名字");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+               Cache.putDaoChuName(zuheName.getText().toString(),MyApp.context);
+               daochuNameText.setText("名字:"+Cache.getDaoChuName(MyApp.context));
+            }
+        });
+
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.show();
     }
 
     @OnClick(R.id.update)
     public void update() {
-        Toast.makeText(this, "update", Toast.LENGTH_SHORT).show();
+        WebDataService webDataService=new WebDataService();
+        webDataService.getMainSixPartModel(this);
+        TradingCenter tradingCenter=new TradingCenter();
+        tradingCenter.judementWeituo();
+        tradingCenter.judementGroup();
     }
 
     @OnClick(R.id.updateDate)

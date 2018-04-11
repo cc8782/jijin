@@ -2,10 +2,91 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
         >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/head"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/jingzhi_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="基金名称"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/jingzhi_daima"
+                android:layout_width="match_parent"
+                android:textSize="14sp"
+                android:text="基金代码"
+                android:gravity="center"
+                android:textColor="@color/black_overlay"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/jignzhi_dwjz1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="单位净值"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/jingzhi_ljjz1"
+                android:layout_width="match_parent"
+                android:text="累计净值"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textColor="@color/black_overlay"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/jingzhi_rzzz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="日增长值"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/jingzhi_rzzl"
+                android:layout_width="match_parent"
+                android:text="日增长率"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textColor="@color/black_overlay"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
     <ListView android:id="@+id/listView"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
               android:divider="@null"
 
             />

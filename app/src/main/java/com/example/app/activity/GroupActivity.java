@@ -10,6 +10,7 @@ import com.example.app.R;
 import com.example.app.db.DBHelper;
 import com.example.app.db.GroupDBHelper;
 import com.example.app.model.Group;
+import com.example.app.utils.UiUtils;
 
 import butterknife.BindView;
 
@@ -30,6 +31,10 @@ public class GroupActivity extends BaseActivity {
     RelativeLayout relativeLayout;
     @BindView(R.id.cash)
     TextView cashText;
+    @BindView(R.id.weituo)
+    TextView weituoText;
+    @BindView(R.id.ljjz)
+    TextView ljjzText;
     private GroupDBHelper groupDBHelper;
 
     @Override
@@ -55,10 +60,12 @@ public class GroupActivity extends BaseActivity {
     private void updateData(){
         Group group=groupDBHelper.findGroupByID(groupId);
         if(group!=null){
-            totalText.setText(group.getTotalValue()+"");
-            dayprofitsText.setText(group.getProfit()+"");
-            marketValueText.setText(group.getMarketValue()+"");
-            cashText.setText(group.getCash()+"");
+            totalText.setText(UiUtils.format2wei(group.getTotalValue()));
+            dayprofitsText.setText(UiUtils.format2wei(group.getProfit()*100));
+            marketValueText.setText(UiUtils.format2wei(group.getMarketValue()));
+            cashText.setText(UiUtils.format2wei(group.getCash()));
+            weituoText.setText(group.getWeituo()+"");
+            ljjzText.setText(UiUtils.format2wei(group.getLjjz()));
         }
     }
     private void setData() {

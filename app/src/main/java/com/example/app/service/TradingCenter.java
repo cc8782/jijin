@@ -29,7 +29,7 @@ import io.realm.RealmList;
 public class TradingCenter {
     private GroupDBHelper groupDBHelper=new GroupDBHelper(DBHelper.getRealm());
     private JingZhiDBHelper jingZhiDBHelper=new JingZhiDBHelper(DBHelper.getRealm());
-    public void judement() {
+    public void judementWeituo() {
         WeituoDBHelper weituoDBHelper = new WeituoDBHelper(DBHelper.getRealm());
         List<Weituo> weituos = weituoDBHelper.findbyStatus(0);
         if (weituos.size()==0){
@@ -139,6 +139,57 @@ public class TradingCenter {
         dbHelper.saveOrUpdate(weituo);
 
     }
+    public void judementGroup(){
+        List<Group> groups=groupDBHelper.findAllGroup();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if(Cache.getupdateDate(MyApp.context).equals("")){
+            return;
+        }
+        try {
+          Date updateDate=  dateFormat.parse(Cache.getupdateDate(MyApp.context));
+            if(groups.get(0).getUpdate()==null||groups.get(0).getUpdate().before(updateDate)){
+              updateGroupValue(groups,updateDate);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void updateGroupValue(List<Group> groups, Date updateDate) {
+        Realm realm=DBHelper.getRealm();
+        JingZhiDBHelper jingZhiDBHelper=new JingZhiDBHelper(DBHelper.getRealm());
+
+        for(Group group:groups){
+           Double marketValuetmp=0.0;
+           for(ChiCang chiCang:group.getChicang()){
+               Jingzhi jingzhi=jingZhiDBHelper.findJingzhiByID(chiCang.getJingzhi().getDaima());
+               if(jingzhi.getDwjz1()==null||jingzhi.getDwjz1().equals("")){
+                   marketValuetmp=marketValuetmp+chiCang.getChicangliang()*Double.parseDouble(chiCang.getJingzhi().getDwjz1());
+               }else {
+                   marketValuetmp=marketValuetmp+chiCang.getChicangliang()*Double.parseDouble(jingzhi.getDwjz1());
+               }
+
+           }
+           Double totalValuetmp=group.getMarketValue()+group.getCash()+group.getWeituo();
+            Double profittmp=(totalValuetmp-group.getTotalValue())/group.getTotalValue();
+           realm.beginTransaction();
+            group.setMarketValue(marketValuetmp);
+            group.setTotalValue(totalValuetmp);
+            group.setUpdate(updateDate);
+            if(profittmp<group.getMostLost()){
+                group.setMostLost(profittmp);
+            }
+            group.setProfit(profittmp);
+            group.setLjjz(totalValuetmp/group.getStartValue());
+            realm.commitTransaction();
+
+        }
+        if(realm!=null){
+            realm.close();
+        }
+    }
+
     public static String addDay(Date d, int n) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
