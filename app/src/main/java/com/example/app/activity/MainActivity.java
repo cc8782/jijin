@@ -65,6 +65,7 @@ public class MainActivity extends BackActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
 
+
         groupDBHelper = new GroupDBHelper(DBHelper.getRealm());
         mainListAdapter = new MainListAdapter(this, datas);
         listView.setAdapter(mainListAdapter);
@@ -100,12 +101,12 @@ public class MainActivity extends BackActivity {
             orders.add(new Order("2","223","13dfs","123sdf"));
             orders.add(new Order("3","323","13dfs","123sdf"));
             orders.add(new Order("4","423","13dfs","123sdf"));
-            file = ExcleUtils.writeExcel(this,orders,"88");
+            file = ExcleUtils.writeExcel(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        SendMailUtil.send(file, "41549733@qq.com");
+        SendMailUtil.send(file, "huadf@cj-pension.com.cn");
     }
 
     @OnClick(R.id.daochuname)
@@ -188,6 +189,7 @@ public class MainActivity extends BackActivity {
                         group.setChicang(new RealmList<ChiCang>());
                         group.setStatus(0);
                         group.setProfit(0.0);
+                        group.setWeituo(0.0);
                         DBHelper dbHelper = new DBHelper(DBHelper.getRealm());
                         dbHelper.saveOrUpdate(group);
                         updateList();

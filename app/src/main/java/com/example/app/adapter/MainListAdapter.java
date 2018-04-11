@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.app.R;
 import com.example.app.activity.GroupActivity;
 import com.example.app.model.Group;
+import com.example.app.utils.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +83,8 @@ public class MainListAdapter extends BaseAdapter {
                 viewHolder.relativeLayout.setBackground(AppCompatResources.getDrawable(context,R.drawable.cornerblue));
             }
             viewHolder.zuheDate.setText("创建于"+group.getStartDate());
-            viewHolder.ljjz.setText(group.getLjjz()+"");
-            viewHolder.mostlost.setText(String.valueOf(group.getMostLost()*100)+"%");
+            viewHolder.ljjz.setText(UiUtils.format2wei(group.getLjjz()));
+            viewHolder.mostlost.setText(UiUtils.format2wei(group.getMostLost()/100)+"%");
 
 
         return convertView;

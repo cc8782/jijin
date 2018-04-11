@@ -103,6 +103,11 @@ public class UiUtils {
         DecimalFormat df = new DecimalFormat("0.00");
         return df.format(num);
     }
+    public static String format4wei(Double num) {
+
+        DecimalFormat df = new DecimalFormat("0.0000");
+        return df.format(num);
+    }
     public static Double formatJingzhi(String ss){
         if(ss==null||ss.equals("")||ss.equals("0")||ss.equals("0.00%")){
             return 0.0;

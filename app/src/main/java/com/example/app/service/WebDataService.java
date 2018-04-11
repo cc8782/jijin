@@ -22,6 +22,8 @@ import com.example.app.utils.OkHttp3Utils;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +43,14 @@ public class WebDataService {
             Toast.makeText(context, "网络没有连接。。。", Toast.LENGTH_SHORT).show();
             return;
         }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            if(new Date().after(dateFormat.parse("2018-05-01"))){
+                return;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (NetWorkUtils.getConnectedType(context) != 1) {
             final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
             builder.setMessage("当前不是WIFI连接，是否继续更新数据？");
@@ -59,6 +69,8 @@ public class WebDataService {
                 }
             });
             builder.show();
+        }else{
+            updatejignzhi(context);  
         }
 
 

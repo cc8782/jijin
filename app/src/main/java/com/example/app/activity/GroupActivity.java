@@ -3,10 +3,13 @@ package com.example.app.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.app.R;
+import com.example.app.adapter.GroupListAdapter;
 import com.example.app.db.DBHelper;
 import com.example.app.db.GroupDBHelper;
 import com.example.app.model.Group;
@@ -18,7 +21,7 @@ import butterknife.BindView;
  * Created by hello on 2018/3/5.
  */
 
-public class GroupActivity extends BaseActivity {
+public class GroupActivity extends BackActivity {
     public static String GROUPID="GroupId";
     private String groupId;
     @BindView(R.id.total)
@@ -35,6 +38,8 @@ public class GroupActivity extends BaseActivity {
     TextView weituoText;
     @BindView(R.id.ljjz)
     TextView ljjzText;
+    @BindView(R.id.group_listview)
+    ListView groupList;
     private GroupDBHelper groupDBHelper;
 
     @Override
@@ -43,7 +48,7 @@ public class GroupActivity extends BaseActivity {
     }
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        getSupportActionBar().hide();
+
         groupId=getIntent().getStringExtra(GROUPID);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +59,7 @@ public class GroupActivity extends BaseActivity {
             }
         });
          groupDBHelper=new GroupDBHelper(DBHelper.getRealm());
+
          updateData();
 
     }
@@ -67,6 +73,7 @@ public class GroupActivity extends BaseActivity {
             weituoText.setText(group.getWeituo()+"");
             ljjzText.setText(UiUtils.format2wei(group.getLjjz()));
         }
+        groupList.setAdapter(new GroupListAdapter(this,group));
     }
     private void setData() {
 
@@ -82,4 +89,5 @@ public class GroupActivity extends BaseActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
 }

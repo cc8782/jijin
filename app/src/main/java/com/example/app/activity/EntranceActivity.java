@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.example.app.R;
 import com.example.app.service.WebDataService;
+import com.example.app.utils.NetWorkUtils;
 
 /**
  * Created by RainL on 15/3/19.
@@ -32,8 +33,11 @@ public class EntranceActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         setContentView(imageView);
-        WebDataService webDataService=new WebDataService();
-        webDataService.getMainSixPartModel(this);
+        if(NetWorkUtils.getAPNType(this)==1){
+            WebDataService webDataService=new WebDataService();
+            webDataService.getMainSixPartModel(this);
+        }
+
 //        TradingCenter tradingCenter=new TradingCenter();
 //        tradingCenter.judementWeituo();
         Intent intent = getIntent();
