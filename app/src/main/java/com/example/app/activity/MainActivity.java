@@ -26,6 +26,7 @@ import com.example.app.model.Group;
 import com.example.app.service.TradingCenter;
 import com.example.app.service.WebDataService;
 import com.example.app.utils.ExcleUtils;
+import com.example.app.utils.Order;
 import com.example.app.utils.UiUtils;
 
 import java.io.File;
@@ -94,8 +95,12 @@ public class MainActivity extends BackActivity {
        // File file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.txt");
         File file= null;
         try {
-
-            file = ExcleUtils.writeExcel(this);
+            List<Order> orders=new ArrayList<>();
+            orders.add(new Order("1","123","13dfs","123sdf"));
+            orders.add(new Order("2","223","13dfs","123sdf"));
+            orders.add(new Order("3","323","13dfs","123sdf"));
+            orders.add(new Order("4","423","13dfs","123sdf"));
+            file = ExcleUtils.writeExcel(this,orders,"88");
         } catch (Exception e) {
             e.printStackTrace();
         }

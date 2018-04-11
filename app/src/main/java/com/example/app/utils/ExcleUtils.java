@@ -122,7 +122,55 @@ public class ExcleUtils {
             wwb.close();
             return file;
         }
+    public static File writeExcel(Context context, List<Order> exportOrder,
+                                  String fileName) throws Exception {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)&&getAvailableStorage()>1000000) {
+            Toast.makeText(context, "SD卡不可用", Toast.LENGTH_LONG).show();
+            return null;
+        }
+        String[] title = { "订单", "店名", "电话", "地址" };
+        File file;
+        File dir = new File(context.getExternalFilesDir(null).getPath());
+        file = new File(dir, fileName + ".xls");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        // 创建Excel工作表
+        WritableWorkbook wwb;
+        OutputStream os = new FileOutputStream(file);
+        wwb = Workbook.createWorkbook(os);
+        // 添加第一个工作表并设置第一个Sheet的名字
+        WritableSheet sheet = wwb.createSheet("订单", 0);
+        Label label;
+        for (int i = 0; i < title.length; i++) {
+            // Label(x,y,z) 代表单元格的第x+1列，第y+1行, 内容z
+            // 在Label对象的子对象中指明单元格的位置和内容
+            label = new Label(i, 0, title[i], getHeader());
+            // 将定义好的单元格添加到工作表中
+            sheet.addCell(label);
+        }
 
+        for (int i = 0; i < exportOrder.size(); i++) {
+            Order order = exportOrder.get(i);
+
+            Label orderNum = new Label(0, i + 1, order.id);
+            Label restaurant = new Label(1, i + 1, order.restName);
+            Label nameLabel = new Label(2,i+1,order.restPhone);
+            Label address = new Label(3, i + 1, order.receiverAddr);
+
+            sheet.addCell(orderNum);
+            sheet.addCell(restaurant);
+            sheet.addCell(nameLabel);
+            sheet.addCell(address);
+
+
+        }
+        // 写入数据
+        wwb.write();
+        // 关闭文件
+        wwb.close();
+        return file;
+    }
         public static WritableCellFormat getHeader() {
             WritableFont font = new WritableFont(WritableFont.TIMES, 10,
                     WritableFont.BOLD);// 定义字体
