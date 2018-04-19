@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
 
+import com.bugtags.library.Bugtags;
 import com.facebook.stetho.Stetho;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
@@ -25,6 +26,7 @@ public class MyApp extends Application  {
     @Override
     public void onCreate() {
         super.onCreate();
+        Bugtags.start("8434905e7902ae660fa469056bea8af8", this, Bugtags.BTGInvocationEventBubble);
         SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {

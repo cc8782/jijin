@@ -18,7 +18,9 @@ public class Chengjiao extends RealmObject {
     private Integer transactionType;//交易类型 0 买；1卖
     private double buyCash;
     private Jingzhi jingzhi;
-
+private String name;
+private String daima;
+private String dwjz1;
     private double buyshuifei;
     private Double buyNumber;
     private double buyshengyuCash; //交易结余
@@ -32,6 +34,30 @@ public class Chengjiao extends RealmObject {
 
     public String getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDaima() {
+        return daima;
+    }
+
+    public void setDaima(String daima) {
+        this.daima = daima;
+    }
+
+    public String getDwjz1() {
+        return dwjz1;
+    }
+
+    public void setDwjz1(String dwjz1) {
+        this.dwjz1 = dwjz1;
     }
 
     public void setId(String id) {
@@ -82,9 +108,6 @@ public class Chengjiao extends RealmObject {
         return jingzhi;
     }
 
-    public void setJingzhi(Jingzhi jingzhi) {
-        this.jingzhi = jingzhi;
-    }
 
     public double getBuyshuifei() {
         return buyshuifei;

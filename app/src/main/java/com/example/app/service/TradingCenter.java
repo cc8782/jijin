@@ -53,7 +53,7 @@ public class TradingCenter {
                 if (hour > 15) {
                     cd1.add(Calendar.DATE, 1);
                 }
-                if (fmt.format(cd1.getTime()).equals(fmt.format(cd2.getTime()))) {
+                if (fmt.format(cd1.getTime()).equals(fmt.format(cd2.getTime()))||cd1.before(cd2)) {
                     trad(weituo ,realm);
                 }
             }
@@ -74,7 +74,10 @@ public class TradingCenter {
         chengjiao.setWeiTuoId(weituo.getId());
         chengjiao.setGroupId(weituo.getGroupId());
         chengjiao.setTradeTime(new Date());
-        chengjiao.setJingzhi(jingzhi);
+        chengjiao.setDaima(jingzhi.getDaima());
+        chengjiao.setName(jingzhi.getName());
+        chengjiao.setDwjz1(jingzhi.getDwjz1());
+
         if(weituo.getTransactionType()==0){
             chengjiao.setTransactionType(weituo.getTransactionType());
             Double number=(weituo.getBuyCash()/UiUtils.formatJingzhi(jingzhi.getDwjz1()))/(weituo.getBuyshuifei()+1);
@@ -88,17 +91,20 @@ public class TradingCenter {
             RealmList<ChiCang> chiCangs=group.getChicang();
             int flag=0;
             for(ChiCang chiCang:chiCangs){
-                if(chiCang.getJingzhi().getDaima().equals(jingzhi.getDaima())){
-                    Jingzhi oldJingzhi=chiCang.getJingzhi();
-                    oldJingzhi.setDwjz1(String.valueOf((UiUtils.formatJingzhi(jingzhi.getDwjz1())*chiCang.getChicangliang()+number*UiUtils.formatJingzhi(jingzhi.getDwjz1()))/(chiCang.getChicangliang()+number)));
-                   chiCang.setJingzhi(oldJingzhi);
+                if(chiCang.getDaima().equals(jingzhi.getDaima())){
+
+                    chiCang.setDwjz1(String.valueOf((UiUtils.formatJingzhi(jingzhi.getDwjz1())*chiCang.getChicangliang()+number*UiUtils.formatJingzhi(jingzhi.getDwjz1()))/(chiCang.getChicangliang()+number)));
+
                     chiCang.setChicangliang(chiCang.getChicangliang()+number);
                     flag=1;
                 }
             }
             if(flag==0){
                 ChiCang chiCang=new ChiCang();
-                chiCang.setJingzhi(jingzhi);
+                chiCang.setDaima(jingzhi.getDaima());
+                chiCang.setName(jingzhi.getName());
+                chiCang.setDwjz1(jingzhi.getDwjz1());
+
                 chiCang.setChicangliang(number);
                 chiCangs.add(chiCang);
             }
@@ -117,14 +123,14 @@ public class TradingCenter {
             group.setMarketValue(group.getMarketValue()-chengjiao.getSellZongjia());
             RealmList<ChiCang> chiCangs=group.getChicang();
             for(ChiCang chiCang:chiCangs){
-                if(chiCang.getJingzhi().getDaima().equals(jingzhi.getDaima())){
+                if(chiCang.getDaima().equals(jingzhi.getDaima())){
                     if(chiCang.getChicangliang()==chengjiao.getSellnumber()){
                         chiCangs.remove(chiCang);
                         return;
                     }
-                    Jingzhi oldJingzhi=chiCang.getJingzhi();
-                    oldJingzhi.setDwjz1(String.valueOf((UiUtils.formatJingzhi(oldJingzhi.getDwjz1())*chiCang.getChicangliang()-chengjiao.getSellZongjia())/(chiCang.getChicangliang()-chengjiao.getSellnumber())));
-                    chiCang.setJingzhi(oldJingzhi);
+
+                    chiCang.setDwjz1(String.valueOf((UiUtils.formatJingzhi(chiCang.getDwjz1())*chiCang.getChicangliang()-chengjiao.getSellZongjia())/(chiCang.getChicangliang()-chengjiao.getSellnumber())));
+
                     chiCang.setChicangliang(chiCang.getChicangliang()-chengjiao.getSellnumber());
                 }
             }
@@ -167,15 +173,15 @@ public class TradingCenter {
         for(Group group:groups){
            Double marketValuetmp=0.0;
            for(ChiCang chiCang:group.getChicang()){
-               Jingzhi jingzhi=jingZhiDBHelper.findJingzhiByID(chiCang.getJingzhi().getDaima());
+               Jingzhi jingzhi=jingZhiDBHelper.findJingzhiByID(chiCang.getDaima());
                if(jingzhi.getDwjz1()==null||jingzhi.getDwjz1().equals("")){
-                   marketValuetmp=marketValuetmp+chiCang.getChicangliang()*Double.parseDouble(chiCang.getJingzhi().getDwjz1());
+                   marketValuetmp=marketValuetmp+chiCang.getChicangliang()*Double.parseDouble(chiCang.getDwjz1());
                }else {
                    marketValuetmp=marketValuetmp+chiCang.getChicangliang()*Double.parseDouble(jingzhi.getDwjz1());
                }
 
            }
-           Double totalValuetmp=group.getMarketValue()+group.getCash()+group.getWeituo();
+           Double totalValuetmp=marketValuetmp+group.getCash()+group.getWeituo();
             Double profittmp=(totalValuetmp-group.getTotalValue())/group.getTotalValue();
            realm.beginTransaction();
             group.setMarketValue(marketValuetmp);

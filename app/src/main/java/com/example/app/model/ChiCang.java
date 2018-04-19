@@ -8,9 +8,36 @@ import io.realm.RealmObject;
 
 public class ChiCang extends RealmObject {
   private Double chicangliang;
-  private Jingzhi jingzhi;
+
+  private String daima;
+  private String name;
+  private String dwjz1;
 
   public ChiCang() {
+  }
+
+  public String getDaima() {
+    return daima;
+  }
+
+  public void setDaima(String daima) {
+    this.daima = daima;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getDwjz1() {
+    return dwjz1;
+  }
+
+  public void setDwjz1(String dwjz1) {
+    this.dwjz1 = dwjz1;
   }
 
   public Double getChicangliang() {
@@ -21,11 +48,5 @@ public class ChiCang extends RealmObject {
     this.chicangliang = chicangliang;
   }
 
-  public Jingzhi getJingzhi() {
-    return jingzhi;
-  }
 
-  public void setJingzhi(Jingzhi jingzhi) {
-    this.jingzhi = jingzhi;
-  }
 }

@@ -98,15 +98,15 @@ public class ExcleUtils {
 
                 for (int i = 0; i < group.getChicang().size(); i++) {
                     ChiCang chiCang=group.getChicang().get(i);
-                    Label jjdm = new Label(0, i + 1, chiCang.getJingzhi().getDaima());
-                    Label jjmc = new Label(1, i + 1, chiCang.getJingzhi().getName());
+                    Label jjdm = new Label(0, i + 1, chiCang.getDaima());
+                    Label jjmc = new Label(1, i + 1, chiCang.getName());
                     Label ccl = new Label(2,i+1,chiCang.getChicangliang().toString());
-                    Label cbj = new Label(3, i + 1, chiCang.getJingzhi().getDwjz1());
+                    Label cbj = new Label(3, i + 1, chiCang.getDwjz1());
                     sheet.addCell(jjdm);
                     sheet.addCell(jjmc);
                     sheet.addCell(ccl);
                     sheet.addCell(cbj);
-                    Jingzhi jingzhi=jingZhiDBHelper.findJingzhiByID(chiCang.getJingzhi().getDaima());
+                    Jingzhi jingzhi=jingZhiDBHelper.findJingzhiByID(chiCang.getDaima());
                     if(jingzhi!=null){
                         Label zxspj = new Label(3, i + 1,jingzhi.getDwjz1());
                         Label ccsz = new Label(3, i + 1,String.valueOf(Double.parseDouble(jingzhi.getDwjz1())*chiCang.getChicangliang()));

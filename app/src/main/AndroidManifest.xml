@@ -34,6 +34,8 @@
         <activity android:name=".activity.GroupActivity" />
         <activity android:name=".activity.SerachAddActivity" />
         <activity android:name=".activity.JiaoyiActivity" />
+        <activity android:name=".activity.WeituoActivity" />
+        <activity android:name=".activity.ChengjiaoActivity" />
 
     </application>
 

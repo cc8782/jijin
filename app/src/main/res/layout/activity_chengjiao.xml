@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/weituo_head"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/jingzhi_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="基金名称"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/jingzhi_daima"
+                android:layout_width="match_parent"
+                android:textSize="14sp"
+                android:text="基金代码"
+                android:gravity="center"
+                android:textColor="@color/black_overlay"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/weituozhi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="交易类型"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/weituojia"
+                android:layout_width="match_parent"
+                android:text="交易额"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textColor="@color/black_overlay"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/zhuangtai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="成交单价"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/shijian"
+                android:layout_width="match_parent"
+                android:text="成交时间"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textColor="@color/black_overlay"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <ListView android:id="@+id/weittuo"
+        android:layout_marginTop="8dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+        android:layout_below="@+id/weituo_head"
+              android:divider="@null"
+
+            />
+</RelativeLayout>

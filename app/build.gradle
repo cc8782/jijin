@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 android {
+    useLibrary 'org.apache.http.legacy'
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
 
@@ -11,7 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a"
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         packagingOptions {
@@ -45,8 +46,20 @@ android {
     }
 }
 repositories {  //添加stetho-realm代码仓库地址
+    mavenCentral()
     maven { url 'https://github.com/WickeDev/stetho-realm/raw/master/maven-repo' }
 }
+apply plugin: 'com.bugtags.library.plugin'
+bugtags {
+    //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表
+    appKey "8434905e7902ae660fa469056bea8af8"  //这里是你的 appKey
+    appSecret "fdcae9e95c08c0435166f49615f10806"    //这里是你的 appSecret，管理员在设置页可以查看
+    mappingUploadEnabled true
+
+    //网络跟踪功能配置(企业版)
+    trackingNetworkEnabled true
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -73,4 +86,5 @@ dependencies {
     implementation files('libs/jxl.jar')
     compile 'com.sun.mail:android-mail:1.5.5'
     compile 'com.sun.mail:android-activation:1.5.5'
+    compile 'com.bugtags.library:bugtags-lib:latest.integration'
 }

@@ -29,6 +29,10 @@ import com.example.app.utils.ExcleUtils;
 import com.example.app.utils.Order;
 import com.example.app.utils.UiUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -65,19 +69,20 @@ public class MainActivity extends BackActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
 
-
+        EventBus.getDefault().register(this);
         groupDBHelper = new GroupDBHelper(DBHelper.getRealm());
         mainListAdapter = new MainListAdapter(this, datas);
         listView.setAdapter(mainListAdapter);
         daochuNameText.setText("名字:"+Cache.getDaoChuName(MyApp.context));
-        updateDateText.setText(Cache.getupdateDate(MyApp.context));
-        updateList();
+
+        updateData();
     }
 
-    private void updateList() {
+    private void updateData() {
         datas = groupDBHelper.findAllGroup();
         mainListAdapter.setData(datas);
         mainListAdapter.notifyDataSetChanged();
+        updateDateText.setText(Cache.getupdateDate(MyApp.context));
     }
 
     @Override
@@ -192,7 +197,7 @@ public class MainActivity extends BackActivity {
                         group.setWeituo(0.0);
                         DBHelper dbHelper = new DBHelper(DBHelper.getRealm());
                         dbHelper.saveOrUpdate(group);
-                        updateList();
+                       updateData();
                     }
 
                 }
@@ -214,6 +219,14 @@ public class MainActivity extends BackActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void updateZhibiao(WebDataService.UpdateJingzhiEvent event) {
+       updateData();
+    }
 
-
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

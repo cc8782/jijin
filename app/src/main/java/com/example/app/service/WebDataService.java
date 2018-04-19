@@ -98,12 +98,16 @@ public class WebDataService {
 
                         String ss = arr.get(i).toString();
                         JSONArray jsonArray = JSONArray.parseArray(ss);
-                        Jingzhi jingzhi = new Jingzhi(jsonArray.getString(0), jsonArray.getString(1), jsonArray.getString(2), jsonArray.getString(3), jsonArray.getString(4)
-                                , jsonArray.getString(5), jsonArray.getString(6), jsonArray.getString(7), jsonArray.getString(8), jsonArray.getString(9)
-                                , jsonArray.getString(10), jsonArray.getString(11), jsonArray.getString(12), jsonArray.getString(13), jsonArray.getString(14)
-                                , jsonArray.getString(15), jsonArray.getString(16), jsonArray.getString(17), jsonArray.getString(18), jsonArray.getString(19)
-                                , jsonArray.getString(20)
-                        );
+                        Jingzhi jingzhi;
+
+                             jingzhi = new Jingzhi(jsonArray.getString(0), jsonArray.getString(1), jsonArray.getString(2), jsonArray.getString(3), jsonArray.getString(4)
+                                    , jsonArray.getString(5), jsonArray.getString(6), jsonArray.getString(7), jsonArray.getString(8), jsonArray.getString(9)
+                                    , jsonArray.getString(10), jsonArray.getString(11), jsonArray.getString(12), jsonArray.getString(13), jsonArray.getString(14)
+                                    , jsonArray.getString(15), jsonArray.getString(16), jsonArray.getString(17), jsonArray.getString(18), jsonArray.getString(19)
+                                    , jsonArray.getString(20)
+                            );
+
+
 
                         jingzhis.add(jingzhi);
                     }
@@ -113,6 +117,7 @@ public class WebDataService {
                     final String updateDate;
                     if (dates.size() > 0) {
                         updateDate = dates.get(0).toString();
+
                         Cache.putupdateDate(updateDate, MyApp.context);
                         Handler handler = OkHttp3Utils.getInstance().getHandler();
                         handler.post(new Runnable() {
@@ -135,6 +140,7 @@ public class WebDataService {
                 TradingCenter tradingCenter = new TradingCenter();
                 tradingCenter.judementWeituo();
                 tradingCenter.judementGroup();
+                EventBus.getDefault().postSticky(new UpdateJingzhiEvent());
                 Toast.makeText(context, "数据更新到" + o.toString(), Toast.LENGTH_SHORT).show();
             }
 
@@ -202,6 +208,18 @@ public class WebDataService {
     }
 
     public class UpdateZhibiaoEvent {
+        private String message;
+
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+    }
+    public class UpdateJingzhiEvent {
         private String message;
 
 

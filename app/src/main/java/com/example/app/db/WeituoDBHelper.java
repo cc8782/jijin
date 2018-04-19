@@ -20,6 +20,12 @@ public class WeituoDBHelper extends DBHelper {
                 .equalTo("status", status)
                 .findAll();
     }
+    public List<Weituo> findbyGroupId(String groupId){
+        return  realm
+                .where(Weituo.class)
+                .equalTo("groupId", groupId)
+                .findAll();
+    }
     public List<Weituo> findAll(){
         return realm.where(Weituo.class)
                 .findAll();

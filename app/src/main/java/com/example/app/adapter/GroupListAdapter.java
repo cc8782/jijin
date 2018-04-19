@@ -80,28 +80,29 @@ public class GroupListAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(context,JiaoyiActivity.class);
-                    intent.putExtra(JiaoyiActivity.JINGZHIDAIMA,chiCang.getJingzhi().getDaima());
+                    intent.putExtra(JiaoyiActivity.JINGZHIDAIMA,chiCang.getDaima());
                     intent.putExtra(GroupActivity.GROUPID,group.getId());
                     context.startActivity(intent);
                 }
             });
-            Jingzhi oldJingzhi=chiCang.getJingzhi();
-        Jingzhi nowJingzhi=jingZhiDBHelper.findJingzhiByID(oldJingzhi.getDaima());
-        viewHolder.groupDaima.setText(oldJingzhi.getDaima());
-        viewHolder.groupName.setText(oldJingzhi.getName());
+
+        Jingzhi nowJingzhi=jingZhiDBHelper.findJingzhiByID(chiCang.getDaima());
+        viewHolder.groupDaima.setText(chiCang.getDaima());
+        viewHolder.groupName.setText(chiCang.getName());
         viewHolder.groupShuLiang.setText(UiUtils.format2wei(chiCang.getChicangliang().toString()));
         viewHolder.groupShizhi.setText(UiUtils.format2wei(chiCang.getChicangliang()*Double.parseDouble(nowJingzhi.getDwjz1())));
-        if(Double.parseDouble(nowJingzhi.getDwjz1())>Double.parseDouble(oldJingzhi.getDwjz1())){
+        if(Double.parseDouble(nowJingzhi.getDwjz1())>=Double.parseDouble(chiCang.getDwjz1())){
             viewHolder.groupyked.setTextColor(ContextCompat.getColor(context, R.color.red));
             viewHolder.groupykbl.setTextColor(ContextCompat.getColor(context, R.color.red));
         }else {
             viewHolder.groupyked.setTextColor(ContextCompat.getColor(context, R.color.green));
             viewHolder.groupykbl.setTextColor(ContextCompat.getColor(context, R.color.green));
         }
-         viewHolder.groupChengben.setText(oldJingzhi.getDwjz1());
+         viewHolder.groupChengben.setText(chiCang.getDwjz1());
         viewHolder.groupXianjia.setText(nowJingzhi.getDwjz1());
-        viewHolder.groupyked.setText(UiUtils.format2wei((Double.parseDouble(nowJingzhi.getDwjz1())-Double.parseDouble(oldJingzhi.getDwjz1()))*chiCang.getChicangliang()));
-        viewHolder.groupykbl.setText(UiUtils.format2wei((Double.parseDouble(nowJingzhi.getDwjz1())-Double.parseDouble(oldJingzhi.getDwjz1()))/Double.parseDouble(oldJingzhi.getDwjz1())));
+        viewHolder.groupyked.setText(UiUtils.format2wei((Double.parseDouble(nowJingzhi.getDwjz1())-Double.parseDouble(chiCang.getDwjz1()))*chiCang.getChicangliang()));
+        Double ykbl=(Double.parseDouble(nowJingzhi.getDwjz1())-Double.parseDouble(chiCang.getDwjz1()))/Double.parseDouble(chiCang.getDwjz1())*100.0;
+        viewHolder.groupykbl.setText(UiUtils.format2wei(ykbl)+"%");
 
 
         return convertView;

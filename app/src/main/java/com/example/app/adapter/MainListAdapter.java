@@ -84,7 +84,7 @@ public class MainListAdapter extends BaseAdapter {
             }
             viewHolder.zuheDate.setText("创建于"+group.getStartDate());
             viewHolder.ljjz.setText(UiUtils.format2wei(group.getLjjz()));
-            viewHolder.mostlost.setText(UiUtils.format2wei(group.getMostLost()/100)+"%");
+            viewHolder.mostlost.setText(UiUtils.format2wei(group.getMostLost()*100)+"%");
 
 
         return convertView;

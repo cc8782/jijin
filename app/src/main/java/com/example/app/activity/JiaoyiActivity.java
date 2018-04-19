@@ -236,7 +236,7 @@ public class JiaoyiActivity extends BaseActivity {
             tmp = 0.0;
         }
         for (ChiCang chiCang : chiCangs) {
-            if (chiCang.getJingzhi().getDaima().equals(jingzhiDm)) {
+            if (chiCang.getDaima().equals(jingzhiDm)) {
                 jiaoyiCash.setText("可售份额" + chiCang.getChicangliang() + "份");
                 tmp = Double.valueOf(chiCang.getChicangliang());
             }
