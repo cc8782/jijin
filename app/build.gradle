@@ -54,10 +54,7 @@ bugtags {
     //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表
     appKey "8434905e7902ae660fa469056bea8af8"  //这里是你的 appKey
     appSecret "fdcae9e95c08c0435166f49615f10806"    //这里是你的 appSecret，管理员在设置页可以查看
-    mappingUploadEnabled true
 
-    //网络跟踪功能配置(企业版)
-    trackingNetworkEnabled true
 }
 
 dependencies {
