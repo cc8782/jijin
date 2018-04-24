@@ -90,7 +90,18 @@ public class GroupListAdapter extends BaseAdapter {
         viewHolder.groupDaima.setText(chiCang.getDaima());
         viewHolder.groupName.setText(chiCang.getName());
         viewHolder.groupShuLiang.setText(UiUtils.format2wei(chiCang.getChicangliang().toString()));
-        viewHolder.groupShizhi.setText(UiUtils.format2wei(chiCang.getChicangliang()*Double.parseDouble(nowJingzhi.getDwjz1())));
+
+
+        if(chiCang.getDwjz1()!=null){
+            viewHolder.groupChengben.setText(UiUtils.format2wei(chiCang.getDwjz1().toString()));
+        }
+
+        if(nowJingzhi==null||nowJingzhi.getDwjz1()==null||nowJingzhi.getDwjz1().equals("")){
+            viewHolder.groupShizhi.setText("净值有误");
+            viewHolder.groupXianjia.setText("净值有误");
+            return convertView;
+        }
+            viewHolder.groupShizhi.setText(UiUtils.format2wei(chiCang.getChicangliang()*Double.parseDouble(nowJingzhi.getDwjz1())));
         if(Double.parseDouble(nowJingzhi.getDwjz1())>=Double.parseDouble(chiCang.getDwjz1())){
             viewHolder.groupyked.setTextColor(ContextCompat.getColor(context, R.color.red));
             viewHolder.groupykbl.setTextColor(ContextCompat.getColor(context, R.color.red));
@@ -98,7 +109,7 @@ public class GroupListAdapter extends BaseAdapter {
             viewHolder.groupyked.setTextColor(ContextCompat.getColor(context, R.color.green));
             viewHolder.groupykbl.setTextColor(ContextCompat.getColor(context, R.color.green));
         }
-         viewHolder.groupChengben.setText(chiCang.getDwjz1());
+
         viewHolder.groupXianjia.setText(nowJingzhi.getDwjz1());
         viewHolder.groupyked.setText(UiUtils.format2wei((Double.parseDouble(nowJingzhi.getDwjz1())-Double.parseDouble(chiCang.getDwjz1()))*chiCang.getChicangliang()));
         Double ykbl=(Double.parseDouble(nowJingzhi.getDwjz1())-Double.parseDouble(chiCang.getDwjz1()))/Double.parseDouble(chiCang.getDwjz1())*100.0;
