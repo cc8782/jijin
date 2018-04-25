@@ -1,15 +1,15 @@
 package com.example.app.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.app.MyApp;
 
 import java.text.DecimalFormat;
 
@@ -89,13 +89,27 @@ public class UiUtils {
     }
 
     public static String format1wei(String num) {
-        float result = Float.parseFloat(num);
         DecimalFormat df = new DecimalFormat("0.0");
+        float result=0.0f;
+        try{
+            result = Float.parseFloat(num);
+
+        }catch (Exception e){
+            Toast.makeText(MyApp.context,num+"数据格式出错",Toast.LENGTH_SHORT).show();
+        }
+
         return df.format(result);
     }
     public static String format2wei(String num) {
-        float result = Float.parseFloat(num);
         DecimalFormat df = new DecimalFormat("0.00");
+        float result=0.0f;
+        try{
+             result = Float.parseFloat(num);
+
+        }catch (Exception e){
+            Toast.makeText(MyApp.context,num+"数据格式出错",Toast.LENGTH_SHORT).show();
+        }
+
         return df.format(result);
     }
     public static String format2wei(Double num) {
