@@ -145,7 +145,7 @@ public class MainActivity extends BackActivity {
         WebDataService webDataService=new WebDataService();
         webDataService.getMainSixPartModel(this);
         TradingCenter tradingCenter=new TradingCenter();
-        tradingCenter.judementWeituo();
+        tradingCenter.judementWeituo(this);
         tradingCenter.judementGroup();
     }
 
@@ -222,6 +222,10 @@ public class MainActivity extends BackActivity {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void updateZhibiao(WebDataService.UpdateJingzhiEvent event) {
        updateData();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void updateZhibiao(MainListAdapter.UpdateGroupEvent event) {
+        updateData();
     }
 
     @Override

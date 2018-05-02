@@ -22,6 +22,7 @@ public class GroupDBHelper extends DBHelper {
     }
     public List<Group> findAllGroup(){
         return realm.where(Group.class)
+                .equalTo("status",0)
                 .findAll();
     }
 }

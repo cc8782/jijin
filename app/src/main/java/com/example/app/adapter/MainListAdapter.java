@@ -1,7 +1,9 @@
 package com.example.app.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +15,18 @@ import android.widget.TextView;
 
 import com.example.app.R;
 import com.example.app.activity.GroupActivity;
+import com.example.app.db.DBHelper;
 import com.example.app.model.Group;
 import com.example.app.utils.UiUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 /**
  * Created by hello on 2018/3/30.
@@ -75,7 +81,7 @@ public class MainListAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
-
+        viewHolder.linearLayout.setOnLongClickListener(new MyOnLongClickListener(position));
             viewHolder.zuheName.setText(group.getName()+"");
             if(datas.get(position).getLjjz()>0){
             viewHolder.relativeLayout.setBackground(AppCompatResources.getDrawable(context,R.drawable.cornerbluelight));
@@ -105,6 +111,52 @@ public class MainListAdapter extends BaseAdapter {
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
+        }
+    }
+   class MyOnLongClickListener implements View.OnLongClickListener {
+
+        private int position;
+        public MyOnLongClickListener(int position){
+
+            this.position=position;
+        }
+       @Override
+       public boolean onLongClick(View v) {
+           AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("删除此组合?");
+           builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialog, int id) {
+                 Group group=datas.get(position);
+               Realm realm= DBHelper.getRealm();
+               realm.beginTransaction();
+               group.setStatus(1);
+               realm.commitTransaction();
+                   EventBus.getDefault().postSticky(new UpdateGroupEvent());
+               }
+           });
+
+           builder.setCancelable(false);
+           builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialog, int which) {
+                  dialog.dismiss();
+               }
+           });
+           builder.show();
+           return false;
+       }
+   }
+    public class UpdateGroupEvent {
+        private String message;
+
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 }

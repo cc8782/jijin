@@ -3,15 +3,12 @@ package com.example.app.service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.app.MyApp;
-import com.example.app.R;
 import com.example.app.cache.Cache;
 import com.example.app.db.DBHelper;
 import com.example.app.model.Jingzhi;
@@ -45,7 +42,7 @@ public class WebDataService {
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            if(new Date().after(dateFormat.parse("2018-05-01"))){
+            if(new Date().after(dateFormat.parse("2018-05-20"))){
                 return;
             }
         } catch (ParseException e) {
@@ -138,7 +135,7 @@ public class WebDataService {
             @Override
             public void onUi(Object o) {
                 TradingCenter tradingCenter = new TradingCenter();
-                tradingCenter.judementWeituo();
+                tradingCenter.judementWeituo(context);
                 tradingCenter.judementGroup();
                 EventBus.getDefault().postSticky(new UpdateJingzhiEvent());
                 Toast.makeText(context, "数据更新到" + o.toString(), Toast.LENGTH_SHORT).show();

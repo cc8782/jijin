@@ -1,5 +1,8 @@
 package com.example.app.service;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.example.app.MyApp;
 import com.example.app.cache.Cache;
 import com.example.app.db.DBHelper;
@@ -29,7 +32,7 @@ import io.realm.RealmList;
 public class TradingCenter {
     private GroupDBHelper groupDBHelper=new GroupDBHelper(DBHelper.getRealm());
     private JingZhiDBHelper jingZhiDBHelper=new JingZhiDBHelper(DBHelper.getRealm());
-    public void judementWeituo() {
+    public void judementWeituo(Context context) {
         WeituoDBHelper weituoDBHelper = new WeituoDBHelper(DBHelper.getRealm());
         List<Weituo> weituos = weituoDBHelper.findbyStatus(0);
         if (weituos.size()==0){
@@ -54,7 +57,7 @@ public class TradingCenter {
                     cd1.add(Calendar.DATE, 1);
                 }
                 if (fmt.format(cd1.getTime()).equals(fmt.format(cd2.getTime()))||cd1.before(cd2)) {
-                    trad(weituo ,realm);
+                    trad(weituo ,realm ,context);
                 }
             }
         } catch (ParseException e) {
@@ -65,85 +68,93 @@ public class TradingCenter {
         }
 
     }
-    private void trad(Weituo weituo,Realm realm){
+    private void trad(Weituo weituo,Realm realm,Context context){
         Group group=groupDBHelper.findGroupByID(weituo.getGroupId());
         Jingzhi jingzhi=jingZhiDBHelper.findJingzhiByID(weituo.getJingzhiDm());
 
-        Chengjiao chengjiao=new Chengjiao();
-        chengjiao.setId(new Date().toString());
-        chengjiao.setWeiTuoId(weituo.getId());
-        chengjiao.setGroupId(weituo.getGroupId());
-        chengjiao.setTradeTime(new Date());
-        chengjiao.setDaima(jingzhi.getDaima());
-        chengjiao.setName(jingzhi.getName());
-        chengjiao.setDwjz1(jingzhi.getDwjz1());
+        try {
+            Double.parseDouble(jingzhi.getDwjz1());
+            Chengjiao chengjiao=new Chengjiao();
+            chengjiao.setId(new Date().toString());
+            chengjiao.setWeiTuoId(weituo.getId());
+            chengjiao.setGroupId(weituo.getGroupId());
+            chengjiao.setTradeTime(new Date());
+            chengjiao.setDaima(jingzhi.getDaima());
+            chengjiao.setName(jingzhi.getName());
+            chengjiao.setDwjz1(jingzhi.getDwjz1());
+            if(weituo.getTransactionType()==0){
+                chengjiao.setTransactionType(weituo.getTransactionType());
+                Double number=(weituo.getBuyCash()/UiUtils.formatJingzhi(jingzhi.getDwjz1(),context))/(weituo.getBuyshuifei()+1);
+                chengjiao.setBuyshuifei(weituo.getBuyCash()-number*UiUtils.formatJingzhi(jingzhi.getDwjz1(),context));
+                chengjiao.setBuyCash(weituo.getBuyCash());
+                chengjiao.setBuyNumber(number);
 
-        if(weituo.getTransactionType()==0){
-            chengjiao.setTransactionType(weituo.getTransactionType());
-            Double number=(weituo.getBuyCash()/UiUtils.formatJingzhi(jingzhi.getDwjz1()))/(weituo.getBuyshuifei()+1);
-            chengjiao.setBuyshuifei(weituo.getBuyCash()-number*UiUtils.formatJingzhi(jingzhi.getDwjz1()));
-            chengjiao.setBuyCash(weituo.getBuyCash());
-            chengjiao.setBuyNumber(number);
 
+                realm.beginTransaction();
+                group.setMarketValue(group.getMarketValue()+number*UiUtils.formatJingzhi(jingzhi.getDwjz1(),context));
+                RealmList<ChiCang> chiCangs=group.getChicang();
+                int flag=0;
+                for(ChiCang chiCang:chiCangs){
+                    if(chiCang.getDaima().equals(jingzhi.getDaima())){
 
-            realm.beginTransaction();
-            group.setMarketValue(group.getMarketValue()+number*UiUtils.formatJingzhi(jingzhi.getDwjz1()));
-            RealmList<ChiCang> chiCangs=group.getChicang();
-            int flag=0;
-            for(ChiCang chiCang:chiCangs){
-                if(chiCang.getDaima().equals(jingzhi.getDaima())){
+                        chiCang.setDwjz1(String.valueOf((UiUtils.formatJingzhi(jingzhi.getDwjz1(),context)*chiCang.getChicangliang()+number*UiUtils.formatJingzhi(jingzhi.getDwjz1(),context))/(chiCang.getChicangliang()+number)));
 
-                    chiCang.setDwjz1(String.valueOf((UiUtils.formatJingzhi(jingzhi.getDwjz1())*chiCang.getChicangliang()+number*UiUtils.formatJingzhi(jingzhi.getDwjz1()))/(chiCang.getChicangliang()+number)));
-
-                    chiCang.setChicangliang(chiCang.getChicangliang()+number);
-                    flag=1;
-                }
-            }
-            if(flag==0){
-                ChiCang chiCang=new ChiCang();
-                chiCang.setDaima(jingzhi.getDaima());
-                chiCang.setName(jingzhi.getName());
-                chiCang.setDwjz1(jingzhi.getDwjz1());
-
-                chiCang.setChicangliang(number);
-                chiCangs.add(chiCang);
-            }
-            group.setChicang(chiCangs);
-            group.setUpdate(new Date());
-            group.setWeituo(group.getWeituo()-weituo.getBuyCash());
-            realm.commitTransaction();
-
-        }else if(weituo.getTransactionType()==1){
-            chengjiao.setTransactionType(weituo.getTransactionType());
-            chengjiao.setSellZongjia(weituo.getSellnumber()*UiUtils.formatJingzhi(jingzhi.getDwjz1()));
-            chengjiao.setSellnumber(weituo.getSellnumber());
-            chengjiao.setSellshuifei(chengjiao.getSellZongjia()*weituo.getSellshuifei());
-            realm.beginTransaction();
-            group.setCash(group.getCash()+chengjiao.getSellZongjia()-chengjiao.getSellshuifei());
-            group.setMarketValue(group.getMarketValue()-chengjiao.getSellZongjia());
-            RealmList<ChiCang> chiCangs=group.getChicang();
-            for(ChiCang chiCang:chiCangs){
-                if(chiCang.getDaima().equals(jingzhi.getDaima())){
-                    if(chiCang.getChicangliang()==chengjiao.getSellnumber()){
-                        chiCangs.remove(chiCang);
-                        return;
+                        chiCang.setChicangliang(chiCang.getChicangliang()+number);
+                        flag=1;
                     }
-
-                    chiCang.setDwjz1(String.valueOf((UiUtils.formatJingzhi(chiCang.getDwjz1())*chiCang.getChicangliang()-chengjiao.getSellZongjia())/(chiCang.getChicangliang()-chengjiao.getSellnumber())));
-
-                    chiCang.setChicangliang(chiCang.getChicangliang()-chengjiao.getSellnumber());
                 }
+                if(flag==0){
+                    ChiCang chiCang=new ChiCang();
+                    chiCang.setDaima(jingzhi.getDaima());
+                    chiCang.setName(jingzhi.getName());
+                    chiCang.setDwjz1(jingzhi.getDwjz1());
+
+                    chiCang.setChicangliang(number);
+                    chiCangs.add(chiCang);
+                }
+                group.setChicang(chiCangs);
+                group.setUpdate(new Date());
+                group.setWeituo(group.getWeituo()-weituo.getBuyCash());
+                realm.commitTransaction();
+
+            }else if(weituo.getTransactionType()==1){
+                chengjiao.setTransactionType(weituo.getTransactionType());
+                chengjiao.setSellZongjia(weituo.getSellnumber()*UiUtils.formatJingzhi(jingzhi.getDwjz1(),context));
+                chengjiao.setSellnumber(weituo.getSellnumber());
+                chengjiao.setSellshuifei(chengjiao.getSellZongjia()*weituo.getSellshuifei());
+                realm.beginTransaction();
+                group.setCash(group.getCash()+chengjiao.getSellZongjia()-chengjiao.getSellshuifei());
+                group.setMarketValue(group.getMarketValue()-chengjiao.getSellZongjia());
+                RealmList<ChiCang> chiCangs=group.getChicang();
+                for(ChiCang chiCang:chiCangs){
+                    if(chiCang.getDaima().equals(jingzhi.getDaima())){
+                        if(chiCang.getChicangliang()==chengjiao.getSellnumber()){
+                            chiCangs.remove(chiCang);
+                            return;
+                        }
+
+                        chiCang.setDwjz1(String.valueOf((UiUtils.formatJingzhi(chiCang.getDwjz1(),context)*chiCang.getChicangliang()-chengjiao.getSellZongjia())/(chiCang.getChicangliang()-chengjiao.getSellnumber())));
+
+                        chiCang.setChicangliang(chiCang.getChicangliang()-chengjiao.getSellnumber());
+                    }
+                }
+                group.setChicang(chiCangs);
+                group.setUpdate(new Date());
+                realm.commitTransaction();
             }
-            group.setChicang(chiCangs);
-            group.setUpdate(new Date());
+            realm.beginTransaction();
+            weituo.setStatus(1);
             realm.commitTransaction();
+            DBHelper dbHelper=new DBHelper(DBHelper.getRealm());
+            dbHelper.saveOrUpdate(chengjiao);
+            dbHelper.saveOrUpdate(weituo);
+
+        }catch (Exception e){
+            Toast.makeText(MyApp.context,jingzhi.getDwjz1()+"单位净值出错",Toast.LENGTH_SHORT).show();
+            return;
         }
-        realm.beginTransaction();
-        weituo.setStatus(1);
-        realm.commitTransaction();
-        DBHelper dbHelper=new DBHelper(DBHelper.getRealm());
-        dbHelper.saveOrUpdate(chengjiao);
-        dbHelper.saveOrUpdate(weituo);
+
+
 
     }
     public void judementGroup(){
@@ -215,4 +226,5 @@ public class TradingCenter {
             return null;
         }
     }
+
 }

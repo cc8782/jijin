@@ -1,6 +1,7 @@
 package com.example.app.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
@@ -100,14 +101,15 @@ public class UiUtils {
 
         return df.format(result);
     }
-    public static String format2wei(String num) {
+
+    public static String format2wei(String num, Context context) {
         DecimalFormat df = new DecimalFormat("0.00");
         float result=0.0f;
         try{
              result = Float.parseFloat(num);
 
         }catch (Exception e){
-            Toast.makeText(MyApp.context,num+"数据格式出错",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,num+"数据格式出错",Toast.LENGTH_SHORT).show();
         }
 
         return df.format(result);
@@ -122,12 +124,18 @@ public class UiUtils {
         DecimalFormat df = new DecimalFormat("0.0000");
         return df.format(num);
     }
-    public static Double formatJingzhi(String ss){
+    public static Double formatJingzhi(String ss ,Context context){
         if(ss==null||ss.equals("")||ss.equals("0")||ss.equals("0.00%")){
             return 0.0;
         }
+        Double d=0.0;
+        try{
+            d = Double.parseDouble(ss);
 
-        return Double.parseDouble(ss);
+        }catch (Exception e){
+            Toast.makeText(context,ss+"数据格式出错",Toast.LENGTH_SHORT).show();
+        }
+        return d;
 
     }
     public static String formatShui(String ss){

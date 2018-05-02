@@ -3,13 +3,11 @@ package com.example.app.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.app.R;
@@ -21,9 +19,6 @@ import com.example.app.model.ChiCang;
 import com.example.app.model.Group;
 import com.example.app.model.Jingzhi;
 import com.example.app.utils.UiUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,11 +84,11 @@ public class GroupListAdapter extends BaseAdapter {
         Jingzhi nowJingzhi=jingZhiDBHelper.findJingzhiByID(chiCang.getDaima());
         viewHolder.groupDaima.setText(chiCang.getDaima());
         viewHolder.groupName.setText(chiCang.getName());
-        viewHolder.groupShuLiang.setText(UiUtils.format2wei(chiCang.getChicangliang().toString()));
+        viewHolder.groupShuLiang.setText(UiUtils.format2wei(chiCang.getChicangliang().toString(),context));
 
 
         if(chiCang.getDwjz1()!=null){
-            viewHolder.groupChengben.setText(UiUtils.format2wei(chiCang.getDwjz1().toString()));
+            viewHolder.groupChengben.setText(UiUtils.format2wei(chiCang.getDwjz1().toString(),context));
         }
 
         if(nowJingzhi==null||nowJingzhi.getDwjz1()==null||nowJingzhi.getDwjz1().equals("")){
